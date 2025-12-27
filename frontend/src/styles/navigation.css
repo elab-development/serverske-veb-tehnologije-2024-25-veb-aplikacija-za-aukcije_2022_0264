@@ -1,0 +1,17 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 32px;
+  background-color: rgba(42, 14, 49, 0.9);
+  position: fixed;
+  width: 100%;
+  
+  z-index: 10;
+  
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+}

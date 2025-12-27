@@ -18,13 +18,11 @@ class AuctionController extends Controller
     {
         $validated = $request->validate([
             'q' => ['sometimes', 'string', 'max:255'],
-            'title' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string'],
             'min_start_price' => ['sometimes', 'numeric', 'min:0'],
             'max_start_price' => ['sometimes', 'numeric', 'min:0'],
             'min_highest_bid' => ['sometimes', 'numeric', 'min:0'],
             'max_highest_bid' => ['sometimes', 'numeric', 'min:0'],
-            'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'user_id' => ['sometimes', 'integer', 'exists:users,id'],
             'starts_before' => ['sometimes', 'date'],
             'starts_after' => ['sometimes', 'date'],
@@ -36,19 +34,19 @@ class AuctionController extends Controller
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
         ]);
 
-        $query = Auction::query();
+        $query = Auction::query()->with('product');
 
         if (!empty($validated['q'])) {
             $q = $validated['q'];
             $query->where(function ($w) use ($q) {
                 $w->where('title', 'like', "%{$q}%")
-                    ->orWhere('description', 'like', "%{$q}%");
+                    ->orWhere('description', 'like', "%{$q}%")
+                    ->orWhereHas('product',function ($p) use ($q){
+                        $p->where('name','like',"%{$q}%");
+                    });
             });
         }
 
-        if (!empty($validated['title'])) {
-            $query->where('title', 'like', '%' . $validated['title'] . '%');
-        }
         if (!empty($validated['description'])) {
             $query->where('description', 'like', '%' . $validated['description'] . '%');
         }
@@ -63,9 +61,6 @@ class AuctionController extends Controller
         }
         if (isset($validated['max_highest_bid'])) {
             $query->where('highest_bid', '<=', $validated['max_highest_bid']);
-        }
-        if (!empty($validated['category_id'])) {
-            $query->where('category_id', $validated['category_id']);
         }
         if (!empty($validated['user_id'])) {
             $query->where('user_id', $validated['user_id']);
@@ -196,6 +191,8 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
+        $auction->load('product'); 
+
         return response()->json([
             'auction' => new AuctionResource($auction)
         ]);
