@@ -1,0 +1,15 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: transparent; /* da ne probija ljubičasto */
+}
+
+body { background: #3b0a6a; }
+#root { background: purple; }
+
