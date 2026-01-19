@@ -2,14 +2,24 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 import Navigation from "../components/NavigationLogin";
 import Card from "../components/CategoriesCard";
+import Modal from "../components/Modal";
 import "../styles/categories.css";
 
 type Category = {
   id: number;
   name: string;
   description?: string | null;
-  image_url?: string | null; // ako imaš u bazi
+  image_url?: string | null;
 };
+
+type Product = {
+  id: number;
+  name: string;
+  description?: string | null;
+  price: number;
+  category_id?: number;
+};
+
 const categoryImageById: Record<number, string> = {
   1: "/images/categories/1.png",
   2: "/images/categories/2.png",
@@ -23,6 +33,13 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(false);
+  const [productsError, setProductsError] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -38,6 +55,22 @@ export default function CategoriesPage() {
       .catch(() => setError("Ne mogu da učitam kategorije."))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleShowProducts = (category: Category) => {
+    setSelectedCategory(category);
+    setModalOpen(true);
+    setProductsLoading(true);
+    setProductsError("");
+
+    api
+      .get(`/products?category_id=${category.id}`)
+      .then((res) => {
+        const data = res.data?.data ?? [];
+        setCategoryProducts(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setProductsError("Ne mogu da učitam proizvode."))
+      .finally(() => setProductsLoading(false));
+  };
 
   return (
     <>
@@ -60,10 +93,7 @@ export default function CategoriesPage() {
                 description={c.description}
                 imageUrl={categoryImageById[c.id] ?? "/images/categories/default.jpg"}
                 primaryActionLabel="Prikaži proizvode"
-                onPrimaryAction={() => {
-                  // primer akcije: vodi na products i prosledi category_id
-                  window.location.href = `/products?category_id=${c.id}`;
-                }}
+                onPrimaryAction={() => handleShowProducts(c)}
                 secondaryActionLabel="Detalji"
                 onSecondaryAction={() => alert(`Kategorija: ${c.name}`)}
               />
@@ -71,6 +101,46 @@ export default function CategoriesPage() {
           </div>
         )}
       </div>
+
+      {/* Modal za proizvode po kategoriji */}
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <h3 style={{ color: "white", marginTop: 0, marginBottom: "16px" }}>
+          Proizvodi - {selectedCategory?.name}
+        </h3>
+
+        {productsLoading && <p style={{ color: "white" }}>Učitavanje...</p>}
+        {productsError && <p style={{ color: "#ff6b6b" }}>{productsError}</p>}
+
+        {!productsLoading && !productsError && categoryProducts.length === 0 && (
+          <p style={{ color: "white" }}>Nema proizvoda iz ove kategorije.</p>
+        )}
+
+        {!productsLoading && !productsError && categoryProducts.length > 0 && (
+          <ul style={{ color: "white", paddingLeft: "20px", margin: "0 0 16px 0" }}>
+            {categoryProducts.map((p) => (
+              <li key={p.id} style={{ marginBottom: "8px" }}>
+                {p.name}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <button
+          onClick={() => setModalOpen(false)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            background: "#4ade80",
+            color: "black",
+            border: "none",
+            borderRadius: "6px",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Zatvori
+        </button>
+      </Modal>
     </>
   );
 }
