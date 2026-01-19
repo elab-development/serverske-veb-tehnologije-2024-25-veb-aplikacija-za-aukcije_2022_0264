@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Categories from "./pages/Categories";
 import Products from "./pages/Products";
+import MyBids from "./pages/MyBids";
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" replace />;
@@ -26,6 +27,15 @@ export default function App() {
           element={
             <PrivateRoute>
               <HomePage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/my-bids"
+          element={
+            <PrivateRoute>
+              <MyBids />
             </PrivateRoute>
           }
         />

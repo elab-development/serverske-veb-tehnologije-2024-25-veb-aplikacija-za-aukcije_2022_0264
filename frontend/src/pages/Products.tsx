@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import AuthNavigation from "../components/AuthNavigation";
 import Navigation from "../components/NavigationLogin";
 import Card from "../components/CategoriesCard";
 import "../styles/categories.css";
@@ -59,6 +60,7 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const isLoggedIn = !!localStorage.getItem("token");
 
   useEffect(() => {
     setLoading(true);
@@ -77,7 +79,7 @@ export default function ProductsPage() {
 
   return (
     <>
-      <Navigation />
+      {isLoggedIn ? <AuthNavigation /> : <Navigation />}
 
       <div className="page-container">
         <h2 className="h2-category">Proizvodi</h2>
