@@ -1,0 +1,303 @@
+/* CELOKUPAN LAYOUT */
+.login-layout {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* LEVA STRANA – SLIKA */
+.login-left {
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+}
+
+.login-left-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.1;
+    background-image: url("../assets/login-bg.avif");
+    background-color: white;
+   
+
+}
+
+
+
+/* DESNA STRANA – LOGIN */
+.login-right {
+    flex: 1;
+    background: #f4f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LOGIN CARD */
+.login-card {
+    width: 360px;
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.login-card h2 {
+    margin-top: 0;
+    text-align: center;
+    color: #4b0082;
+}
+
+/* FORM */
+.login-form {
+    display: grid;
+    gap: 12px;
+}
+
+.login-form input {
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #6a0dad;
+}
+
+/* BUTTON */
+.login-form button {
+    padding: 11px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #6a0dad, #4b0082);
+    color: white;
+    cursor: pointer;
+}
+
+/* da login layout zauzme ceo ekran */
+.login-layout {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.h1-login {
+    color: white;
+}
+
+.p-login {
+    color: white;
+}
+
+
+.login-right {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.login-form button:disabled {
+    opacity: 0.6;
+}
+
+/* REGISTER TEXT */
+.register-hint {
+    margin-top: 14px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-hint button {
+    background: none;
+    border: none;
+    color: #6a0dad;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* BACKDROP */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+/* MODAL CARD */
+.modal {
+    width: min(520px, 100%);
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+/* HEADER */
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+}
+
+/* X BUTTON */
+.modal-header button {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #e6e6e6;
+    background: #fafafa;
+    color: #111;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.modal-header button:hover {
+    background: #f1f1f1;
+}
+
+/* FORM */
+.modal-form {
+    display: grid;
+    gap: 12px;
+}
+
+/* INPUTS */
+.modal-form input {
+    width: 95%;
+    padding: 12px 12px;
+    border-radius: 10px;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+}
+
+.modal-form input:focus {
+    outline: none;
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.12);
+}
+
+/* SUBMIT BUTTON */
+.modal-form button[type="submit"] {
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    color: #fff;
+    background: linear-gradient(135deg, #6a0dad, #4b0082);
+}
+
+.modal-form button[type="submit"]:hover {
+    opacity: 0.92;
+}
+
+.modal-form button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* FEEDBACK */
+.error-text {
+    margin: 0;
+    color: #d00000;
+    font-size: 13px;
+}
+
+.success-text {
+    margin: 0;
+    color: #1e8e3e;
+    font-size: 13px;
+}
+
+/* --- RESPONSIVE --- */
+
+/* Tablet i manje: smanji padding i card širinu */
+@media (max-width: 1024px) {
+    .login-card {
+        width: min(380px, 92%);
+    }
+
+    .login-left-overlay {
+        padding: 32px;
+    }
+
+    .login-left-overlay h1 {
+        font-size: 34px;
+    }
+}
+
+/* Mobilni: prebaci sa 2 kolone na 1 kolonu */
+@media (max-width: 768px) {
+    .login-layout {
+        flex-direction: column;
+    }
+
+    .login-left {
+        height: 36vh;
+        /* slika gore */
+    }
+
+    .login-right {
+        height: 64vh;
+        /* forma dole */
+        padding: 18px;
+    }
+
+    .login-card {
+        width: min(420px, 100%);
+    }
+
+    .login-left-overlay {
+        padding: 22px;
+    }
+
+    .login-left-overlay h1 {
+        font-size: 28px;
+    }
+}
+
+/* Mali mobilni: još kompaktnije */
+@media (max-width: 420px) {
+    .login-right {
+        padding: 14px;
+    }
+
+    .login-card {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .login-form input {
+        padding: 10px;
+    }
+
+    .login-form button {
+        padding: 10px;
+    }
+}
