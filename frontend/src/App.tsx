@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Categories from "./pages/Categories";
+import Products from "./pages/Products";
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" replace />;
@@ -18,6 +19,7 @@ export default function App() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/categories" element={<Categories/>} />
+        <Route path="/products" element={<Products/>} />
 
         <Route
           path="/home"

@@ -6,6 +6,7 @@ export default function Navigation() {
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem("token");
   const isCategoriesPage = location.pathname === "/categories";
+  const isProductsPage = location.pathname === "/products";
   return (
     <nav className="nav">
 
@@ -20,7 +21,7 @@ export default function Navigation() {
             Kategorije
           </Button>
         )}
-        {!isLoggedIn && (
+        {!isLoggedIn && !isProductsPage && (
           <Button
             variant="secondary"
             onClick={() => navigate("/products")}
@@ -28,7 +29,7 @@ export default function Navigation() {
             Proizvodi
           </Button>
         )}
-        {isCategoriesPage && !isLoggedIn && (
+        {(isCategoriesPage || isProductsPage) && !isLoggedIn && (
           <Button
             variant="secondary"
             onClick={()=> navigate("/login")}
