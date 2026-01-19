@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -72,12 +73,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check() || !(Auth::user()->is_admin ?? false)) {
+            return response()->json(['message' => 'Unauthorized. Only admins can create products.'], 403);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'sku' => ['nullable', 'string', 'max:100', 'unique:products,sku'],
             'category_id' => ['nullable', 'exists:categories,id'],
+            'image_url' => ['nullable', 'string', 'max:500'],
         ]);
 
         $product = Product::create($validated);

@@ -30,7 +30,12 @@ class UserController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'data' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_admin' => $user->is_admin ?? false
+            ],
             'access_token' => $token,
             'token_type' => 'Bearer'
         ]);
@@ -48,6 +53,12 @@ class UserController extends Controller
 
         return response()->json([
             'message' => $user->name . ' logged in',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_admin' => $user->is_admin ?? false
+            ],
             'access_token' => $token,
             'token_type' => 'Bearer'
         ]);

@@ -50,6 +50,11 @@ export default function LoginPage() {
       }
 
       localStorage.setItem("token", token);
+      
+      // Čuva is_admin status
+      const isAdmin = res.data?.user?.is_admin || false;
+      localStorage.setItem("is_admin", JSON.stringify(isAdmin));
+      
       navigate("/home", { replace: true });
     } catch (err) {
       setLoginError("Pogrešan email ili lozinka.");

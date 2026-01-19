@@ -7,6 +7,7 @@ export default function AuthNavigation() {
   const location = useLocation();
   const isCategoriesPage = location.pathname === "/categories";
   const isProductsPage = location.pathname === "/products";
+  const isAdmin = JSON.parse(localStorage.getItem("is_admin") || "false");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -43,6 +44,16 @@ export default function AuthNavigation() {
             onClick={() => navigate("/home")}
           >
             Nazad na početnu
+          </Button>
+        )}
+
+        {isAdmin && (
+          <Button
+            variant="secondary"
+            onClick={() => navigate("/admin/add")}
+            style={{ backgroundColor: "#7c3aed", borderColor: "#7c3aed" }}
+          >
+            Promeni
           </Button>
         )}
 

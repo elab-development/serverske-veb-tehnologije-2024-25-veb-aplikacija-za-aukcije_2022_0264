@@ -15,6 +15,7 @@ class Product extends Model
         'price',
         'sku',
         'category_id',
+        'image_url',
     ];
 
     public function category()

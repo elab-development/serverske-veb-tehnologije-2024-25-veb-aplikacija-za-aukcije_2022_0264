@@ -160,28 +160,28 @@ class AuctionController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        if (!Auth::check() || !(Auth::user()->is_admin ?? false)) {
+            return response()->json(['message' => 'Unauthorized. Only admins can create auctions.'], 403);
         }
 
         $validated = $request->validate([
+            'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'start_price' => 'required|numeric|min:0',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
+            'starting_price' => 'required|numeric|min:0',
+            'end_date' => 'required|date|after:now',
             'product_id' => 'required|integer|exists:products,id',
         ]);
 
-        // Get product and use its name as auction title
+        // Get product
         $product = Product::findOrFail($validated['product_id']);
 
         $auction = Auction::create([
-            'title' => $product->name,
+            'title' => $validated['title'] ?? $product->name,
             'description' => $validated['description'] ?? null,
-            'start_price' => $validated['start_price'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'user_id' => $request->user()->id,
+            'start_price' => $validated['starting_price'],
+            'start_time' => now(),
+            'end_time' => $validated['end_date'],
+            'user_id' => Auth::user()->id,
             'product_id' => $validated['product_id'],
         ]);
 

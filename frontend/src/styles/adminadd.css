@@ -1,0 +1,100 @@
+.admin-add-container {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-add-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-add-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 50px 0;
+  text-align: center;
+}
+
+.admin-add-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.admin-add-btn {
+  background: white;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 40px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.admin-add-btn:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #f3e8ff 0%, #ede9fe 100%);
+}
+
+.admin-add-btn:active {
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 3rem;
+  display: block;
+}
+
+.btn-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #7c3aed;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .admin-add-container {
+    padding: 40px 15px;
+  }
+
+  .admin-add-title {
+    font-size: 2.5rem;
+  }
+
+  .admin-add-subtitle {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+
+  .admin-add-buttons {
+    gap: 20px;
+  }
+
+  .admin-add-btn {
+    padding: 30px 20px;
+  }
+
+  .btn-text {
+    font-size: 1rem;
+  }
+
+  .btn-icon {
+    font-size: 2rem;
+  }
+}
