@@ -75,6 +75,21 @@ class BidController extends Controller
         ]);
     }
 
+    public function myBids()
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $user = Auth::user();
+        $bids = $user->bids()->with('auction.product')->get();
+
+        return response()->json([
+            'count' => $bids->count(),
+            'bids'  => BidResource::collection($bids),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -122,6 +137,7 @@ class BidController extends Controller
         $validated['user_id'] = Auth::id();
 
         $bid = Bid::create($validated);
+        $bid->load('auction.product', 'user');
 
         $highest = $auction->bids()->max('amount');
         $auction->update(['highest_bid' => $highest]);
@@ -129,7 +145,7 @@ class BidController extends Controller
         return response()->json([
             'message' => 'Bid created successfully',
             'bid' => new BidResource($bid),
-        ]);
+        ], 201);
     }
 
     /**

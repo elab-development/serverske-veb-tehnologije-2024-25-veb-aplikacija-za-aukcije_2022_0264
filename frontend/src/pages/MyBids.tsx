@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
-import "../styles/categories.css";
+import Modal from "../components/Modal";
+import "../styles/mybids.css";
+
+/* ================= TYPES ================= */
 
 type Bid = {
   id: number;
@@ -16,11 +19,41 @@ type Bid = {
   };
 };
 
+type Auction = {
+  id: number;
+  product_name?: string;
+  title?: string;
+  current_price?: number;
+  start_price?: number;
+  starting_price?: number;
+  start_time?: string;
+  end_time?: string;
+  product?: {
+    id: number;
+    name: string;
+  };
+};
+
+/* ================= COMPONENT ================= */
+
 export default function MyBidsPage() {
   const navigate = useNavigate();
+
   const [bids, setBids] = useState<Bid[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [auctions, setAuctions] = useState<Auction[]>([]);
+
+  const [loadingBids, setLoadingBids] = useState(true);
+  const [loadingAuctions, setLoadingAuctions] = useState(true);
   const [error, setError] = useState("");
+
+  /* ===== MODAL STATE ===== */
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
+  const [bidAmount, setBidAmount] = useState("");
+  const [bidError, setBidError] = useState("");
+  const [bidSubmitting, setBidSubmitting] = useState(false);
+
+  /* ================= AUTH CHECK ================= */
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,91 +62,230 @@ export default function MyBidsPage() {
       return;
     }
 
-    setLoading(true);
-    setError("");
-
-    api
-      .get("/user/bids")
-      .then((res) => {
-        const data = res.data?.bids ?? res.data?.data ?? [];
-        setBids(Array.isArray(data) ? data : []);
-      })
-      .catch(() => setError("Ne mogu da učitam vaše ponude."))
-      .finally(() => setLoading(false));
+    loadBids();
+    loadAuctions();
   }, [navigate]);
 
+  /* ================= LOAD BIDS ================= */
+
+  const loadBids = async () => {
+    setLoadingBids(true);
+    setError("");
+
+    try {
+      const res = await api.get("/user/bids");
+      const data = res.data?.bids ?? res.data?.data ?? [];
+      setBids(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setError("Greška pri učitavanju ponuda.");
+    } finally {
+      setLoadingBids(false);
+    }
+  };
+
+  /* ================= LOAD AUCTIONS ================= */
+
+  const loadAuctions = async () => {
+    setLoadingAuctions(true);
+
+    try {
+      const res = await api.get("/auctions");
+      const data = res.data?.data ?? res.data?.auctions ?? [];
+
+      const activeAuctions = Array.isArray(data)
+        ? data.filter((auction: Auction) => {
+            if (!auction.end_time) return false;
+            const end = new Date(auction.end_time);
+            return !isNaN(end.getTime()) && end > new Date();
+          })
+        : [];
+
+      setAuctions(activeAuctions);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingAuctions(false);
+    }
+  };
+
+  /* ================= BID HANDLERS ================= */
+
+  const handleBidClick = (auction: Auction) => {
+    setSelectedAuction(auction);
+    setBidAmount("");
+    setBidError("");
+    setModalOpen(true);
+  };
+
+  const handleSubmitBid = async () => {
+    if (!selectedAuction || !bidAmount) {
+      setBidError("Unesite iznos ponude.");
+      return;
+    }
+
+    const amount = Number(bidAmount);
+    const currentPrice = Number(
+      selectedAuction.current_price ??
+        selectedAuction.start_price ??
+        selectedAuction.starting_price ??
+        0
+    );
+
+    if (amount <= currentPrice) {
+      setBidError(`Iznos mora biti veći od ${currentPrice.toFixed(2)}`);
+      return;
+    }
+
+    setBidSubmitting(true);
+
+    try {
+      await api.post("/bids", {
+        auction_id: selectedAuction.id,
+        amount,
+      });
+
+      setModalOpen(false);
+      loadBids();
+      loadAuctions();
+      alert("Ponuda uspešno poslata!");
+    } catch (err: any) {
+      setBidError(err.response?.data?.error || "Greška pri slanju ponude.");
+    } finally {
+      setBidSubmitting(false);
+    }
+  };
+
+  /* ================= RENDER ================= */
+
   return (
-    <>
-      {/* Simple Back Navigation */}
-      <nav
-        style={{
-          background: "#3B0270",
-          padding: "16px 32px",
-          display: "flex",
-          gap: "16px",
-        }}
-      >
-        <button
-          onClick={() => navigate("/home")}
-          style={{
-            padding: "10px 20px",
-            background: "#4ade80",
-            color: "black",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Nazad na početnu
-        </button>
+    <div className="mybids-container">
+      <nav className="mybids-nav">
+        <button onClick={() => navigate("/home")}>Nazad</button>
       </nav>
 
-      <div className="page-container">
-        <h2 className="h2-category">Moje ponude</h2>
+      <h2 className="mybids-title">Moje ponude</h2>
 
-        {loading && <p style={{ color: "white" }}>Učitavanje...</p>}
-        {error && <p style={{ color: "#ff6b6b" }}>{error}</p>}
+      <div className="mybids-grid">
+        {/* ================= LEFT: USER BIDS ================= */}
+        <div className="mybids-section">
+          <h3>Moje ponude</h3>
 
-        {!loading && !error && bids.length === 0 && (
-          <p style={{ color: "white" }}>Nemate nikakvih ponuda.</p>
-        )}
+          {loadingBids && <p>⏳ Učitavanje ponuda...</p>}
+          {!loadingBids && error && <p className="mybids-error">{error}</p>}
 
-        {!loading && !error && bids.length > 0 && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px",
-              width: "100%",
-              maxWidth: "600px",
-            }}
-          >
-            {bids.map((bid) => (
-              <div
-                key={bid.id}
-                style={{
-                  padding: "16px",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "8px",
-                  borderLeft: "4px solid #4ade80",
-                  color: "white",
-                }}
-              >
-                <p style={{ margin: "0 0 8px 0", fontWeight: "bold" }}>
-                  Ponuda: ${bid.amount.toFixed(2)}
-                </p>
-                <p style={{ margin: "0 0 8px 0", color: "#e0e0e0" }}>
-                  Aukcija ID: {bid.auction_id}
-                </p>
-                <p style={{ margin: 0, color: "#b0b0b0", fontSize: "0.9em" }}>
-                  Datum: {new Date(bid.created_at).toLocaleDateString("sr-RS")}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
+          {!loadingBids && bids.length === 0 && (
+            <p className="mybids-empty">Nemate trenutnih ponuda.</p>
+          )}
+
+          {!loadingBids && bids.length > 0 && (
+            <div className="mybids-list">
+              {bids.map((bid) => (
+                <div key={bid.id} className="mybids-item">
+                  <p>
+                    Iznos: <strong>${Number(bid.amount).toFixed(2)}</strong>
+                  </p>
+                  <p>Aukcija ID: {bid.auction_id}</p>
+                  <p>
+                    Datum:{" "}
+                    {new Date(bid.created_at).toLocaleDateString("sr-RS")}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ================= RIGHT: AUCTIONS ================= */}
+        <div className="mybids-section">
+          <h3>Dostupne aukcije</h3>
+
+          {loadingAuctions && <p>⏳ Učitavanje aukcija...</p>}
+
+          {!loadingAuctions && auctions.length === 0 && (
+            <p className="mybids-empty">Nema aktivnih aukcija.</p>
+          )}
+
+          {!loadingAuctions && auctions.length > 0 && (
+            <div className="mybids-list">
+              {auctions.map((auction) => {
+                const price = Number(
+                  auction.current_price ??
+                    auction.start_price ??
+                    auction.starting_price ??
+                    0
+                ).toFixed(2);
+
+                return (
+                  <div key={auction.id} className="mybids-auction-item">
+                    <p className="mybids-auction-name">
+                      {auction.product?.name ||
+                        auction.product_name ||
+                        auction.title ||
+                        "Proizvod"}
+                    </p>
+
+                    <p>
+                      Trenutna cena: <strong>${price}</strong>
+                    </p>
+
+                    <p>
+                      Završava se:{" "}
+                      {auction.end_time
+                        ? new Date(auction.end_time).toLocaleDateString("sr-RS")
+                        : "—"}
+                    </p>
+
+                    <button
+                      className="mybids-button"
+                      onClick={() => handleBidClick(auction)}
+                    >
+                      Uloži ponudu
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
-    </>
+
+      {/* ================= MODAL ================= */}
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <div className="mybids-modal-content">
+          <h3>
+            Ponuda za{" "}
+            {selectedAuction?.product?.name ||
+              selectedAuction?.product_name ||
+              "aukciju"}
+          </h3>
+
+          <p>
+            Trenutna cena: $
+            {Number(
+              selectedAuction?.current_price ??
+                selectedAuction?.start_price ??
+                0
+            ).toFixed(2)}
+          </p>
+
+          <input
+            type="number"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+            placeholder="Unesite iznos"
+          />
+
+          {bidError && <p className="mybids-error">{bidError}</p>}
+
+          <div className="mybids-modal-buttons">
+            <button onClick={handleSubmitBid} disabled={bidSubmitting}>
+              {bidSubmitting ? "Slanje..." : "Potvrdi"}
+            </button>
+            <button onClick={() => setModalOpen(false)}>Otkaži</button>
+          </div>
+        </div>
+      </Modal>
+    </div>
   );
 }

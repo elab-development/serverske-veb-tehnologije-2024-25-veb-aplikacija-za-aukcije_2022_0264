@@ -16,14 +16,19 @@ class AuctionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title'=>$this->product?->name,
+            'title' => $this->product?->name,
             'description' => $this->description,
             'start_price' => $this->start_price,
+            'current_price' => $this->highest_bid ?? $this->start_price,
             'highest_bid' => $this->highest_bid,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
+            'product' => $this->product ? [
+                'id' => $this->product->id,
+                'name' => $this->product->name,
+                'price' => $this->product->price,
+            ] : null,
             'user' => new UserResource($this->user),
-            
         ];
     }
 }

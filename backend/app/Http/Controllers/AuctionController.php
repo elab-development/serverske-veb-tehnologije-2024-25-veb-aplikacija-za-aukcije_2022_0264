@@ -87,14 +87,19 @@ class AuctionController extends Controller
         $auctions = $query->paginate($perPage)->appends($request->query());
 
         if ($auctions->isEmpty()) {
-            return response()->json(['message' => 'No auctions found!'], 404);
+            return response()->json([
+                'count' => 0,
+                'page' => 1,
+                'per_page' => $perPage,
+                'data' => [],
+            ]);
         }
 
         return response()->json([
             'count' => $auctions->total(),
             'page' => $auctions->currentPage(),
             'per_page' => $auctions->perPage(),
-            'auctions' => AuctionResource::collection($auctions),
+            'data' => AuctionResource::collection($auctions),
         ]);
     }
 

@@ -1,0 +1,279 @@
+.mybids-container {
+  background: linear-gradient(135deg, #3B0270 0%, #5B2890 100%);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.mybids-nav {
+  background: rgba(59, 2, 112, 0.95);
+  padding: 16px 32px;
+  display: flex;
+  gap: 16px;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(74, 222, 128, 0.3);
+}
+
+.mybids-nav button {
+  padding: 10px 20px;
+  background: #4ade80;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mybids-nav button:hover {
+  background: #22c55e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+}
+
+.mybids-content {
+  padding: 40px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.mybids-title {
+  color: white;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.mybids-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+}
+
+.mybids-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mybids-section h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  border-bottom: 2px solid rgba(74, 222, 128, 0.3);
+  padding-bottom: 12px;
+}
+
+.mybids-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.mybids-item {
+  padding: 12px 16px;
+  background: rgba(74, 222, 128, 0.1);
+  border-left: 4px solid #4ade80;
+  border-radius: 6px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.mybids-item:hover {
+  background: rgba(74, 222, 128, 0.15);
+  transform: translateX(4px);
+}
+
+.mybids-item p {
+  margin: 0 0 4px 0;
+}
+
+.mybids-item-amount {
+  font-weight: bold;
+  color: #4ade80;
+  font-size: 1.1em;
+}
+
+.mybids-item-label {
+  color: #e0e0e0;
+  font-size: 0.9em;
+}
+
+.mybids-item-date {
+  color: #b0b0b0;
+  font-size: 0.8em;
+}
+
+.mybids-auction-item {
+  padding: 12px 16px;
+  background: rgba(74, 222, 128, 0.1);
+  border-left: 4px solid #4ade80;
+  border-radius: 6px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.mybids-auction-item:hover {
+  background: rgba(74, 222, 128, 0.15);
+  transform: translateX(4px);
+}
+
+.mybids-auction-item p {
+  margin: 0 0 4px 0;
+}
+
+.mybids-auction-name {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.mybids-auction-price {
+  color: #4ade80;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.mybids-auction-date {
+  color: #e0e0e0;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.mybids-button {
+  width: 100%;
+  padding: 10px;
+  background: #4ade80;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mybids-button:hover {
+  background: #22c55e;
+  transform: scale(1.02);
+}
+
+.mybids-empty {
+  color: white;
+  padding: 20px;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 1.1em;
+}
+
+.mybids-loading {
+  color: #4ade80;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.mybids-error {
+  color: #ff6b6b;
+  padding: 16px;
+  background: rgba(255, 107, 107, 0.2);
+  border-left: 4px solid #ff6b6b;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.mybids-modal-content h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.mybids-modal-content {
+  min-width: 400px;
+}
+
+.mybids-modal-label {
+  color: white;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.mybids-modal-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  margin-bottom: 16px;
+}
+
+.mybids-modal-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.mybids-modal-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mybids-modal-confirm {
+  background: #4ade80;
+  color: black;
+}
+
+.mybids-modal-confirm:hover:not(:disabled) {
+  background: #22c55e;
+}
+
+.mybids-modal-cancel {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.mybids-modal-cancel:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.mybids-modal-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .mybids-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .mybids-content {
+    padding: 20px 16px;
+  }
+
+  .mybids-title {
+    font-size: 2em;
+    margin-bottom: 24px;
+  }
+}

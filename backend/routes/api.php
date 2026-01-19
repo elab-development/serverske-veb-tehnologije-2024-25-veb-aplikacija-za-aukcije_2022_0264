@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('bids', BidController::class)
         ->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::get('/user/bids', [BidController::class, 'myBids']);
     Route::get('/auctions/{auction}/bids', [BidController::class, 'auctionBids']);
     Route::get('/users/{user}/bids', [BidController::class, 'userBids']);
 
