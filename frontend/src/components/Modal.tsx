@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../styles/modals.css";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -14,22 +14,24 @@ export default function Modal({ open, onClose, children }: ModalProps) {
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(54, 47, 47, 0.6)",
+        background: "rgba(56, 45, 45, 0.6)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         zIndex: 9999,
+        
       }}
       onClick={onClose}
     >
       <div
         style={{
-          background: "#3B0270",
+          background: "#2a0638",
           padding: 24,
           borderRadius: 12,
           width: "100%",
-          maxWidth: 420,
-          boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+          maxWidth: 500,
+          boxShadow: "0 4px 20px rgba(32, 87, 189, 0.4)",
+          
         }}
         onClick={(e) => e.stopPropagation()}
       >

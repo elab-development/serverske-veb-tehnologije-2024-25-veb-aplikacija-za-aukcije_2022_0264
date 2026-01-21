@@ -5,6 +5,7 @@ import Categories from "./pages/Categories";
 import Products from "./pages/Products";
 import MyBids from "./pages/MyBids";
 import AdminAdd from "./pages/AdminAdd";
+import ActiveAuctions from "./pages/ActiveAuctions";
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" replace />;
@@ -37,6 +38,15 @@ export default function App() {
           element={
             <PrivateRoute>
               <MyBids />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/active-auctions"
+          element={
+            <PrivateRoute>
+              <ActiveAuctions />
             </PrivateRoute>
           }
         />

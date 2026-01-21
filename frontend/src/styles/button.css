@@ -49,14 +49,7 @@
 .ui-btn--secondary {
   position: relative;
   padding: 14px 36px;
-  border-radius: 999px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.9),
-    rgba(245,245,245,0.7)
-  );
-
+  border-radius: 500px;
   border: 1px solid rgba(0,0,0,0.08);
 
   box-shadow:
@@ -75,6 +68,7 @@
   transition: all 0.25s ease;
   
 }
+
 
 .ui-btn--link {
   width: auto;

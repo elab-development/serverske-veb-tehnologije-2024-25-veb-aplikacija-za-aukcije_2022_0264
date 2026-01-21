@@ -1,10 +1,14 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Button from "./Button";
 import "../styles/navigation.css";
 import { Link } from "react-router-dom";
 import NavLink from "./NavLink";
 
-export default function AuthNavigation() {
+interface AuthNavigationProps {
+  mode?: "light" | "dark";
+}
+
+export default function AuthNavigation({ mode = "light" }: AuthNavigationProps) {
   const navigate = useNavigate();
   //const location = useLocation();
   //const isCategoriesPage = location.pathname === "/categories";
@@ -17,7 +21,7 @@ export default function AuthNavigation() {
   };
 
   return (
-    <nav className="nav">
+    <nav className={`nav nav--${mode}`}>
       <div className="nav-left">
         <Link to="/" className="nav__logoWrap">
           <img className="nav__logo" src={"../public/images/logo/logo.png"} alt="Logo" />
@@ -27,6 +31,7 @@ export default function AuthNavigation() {
       </div>
       <div className="nav-actions">
         <NavLink to="/my-bids" label="Moje ponude" />
+        <NavLink to="/active-auctions" label="Aukcije" />
         <NavLink to="/categories" label="Kategorije" />
         <NavLink to="/products" label="Proizvodi" />
         

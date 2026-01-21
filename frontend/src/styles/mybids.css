@@ -1,8 +1,15 @@
+.mybids-wrapper{
+
+ min-height: 100vh;
+  background: linear-gradient(135deg, #181441 0%, #9348d1 50%, #121255 100%);
+  padding-top: 80px;
+
+}
 .mybids-container {
-  background: linear-gradient(135deg, #3B0270 0%, #5B2890 100%);
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  
 }
 
 .mybids-nav {
@@ -52,22 +59,43 @@
   width: 100%;
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .mybids-section {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #310d53 0%, #9c5ce0 100%);
   backdrop-filter: blur(10px);
   padding: 24px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(156, 92, 224, 0.3), 0 0 60px rgba(156, 92, 224, 0.1);
+  animation: float 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mybids-section:hover {
+  box-shadow: 0 12px 40px rgba(156, 92, 224, 0.5), 0 0 80px rgba(156, 92, 224, 0.2);
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .mybids-section h3 {
-  color: white;
+  color: rgb(255, 255, 255);
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 1.5em;
-  border-bottom: 2px solid rgba(74, 222, 128, 0.3);
+  border-bottom: 2px solid rgb(255, 255, 255);
   padding-bottom: 12px;
+  z-index: 999;
 }
+
 
 .mybids-list {
   display: flex;
@@ -75,15 +103,17 @@
   gap: 12px;
   max-height: 500px;
   overflow-y: auto;
+  ;
 }
 
 .mybids-item {
   padding: 12px 16px;
-  background: rgba(74, 222, 128, 0.1);
-  border-left: 4px solid #4ade80;
+  background: rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #16bd31;
   border-radius: 6px;
   color: white;
   transition: all 0.3s ease;
+  z-index: 999;
 }
 
 .mybids-item:hover {

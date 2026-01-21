@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(168, 140, 140, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: rgb(87, 84, 84);
   border-radius: 20px;
   max-width: 600px;
   width: 100%;
@@ -187,7 +187,7 @@
 
 .btn-submit {
   background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .btn-submit:hover:not(:disabled) {
