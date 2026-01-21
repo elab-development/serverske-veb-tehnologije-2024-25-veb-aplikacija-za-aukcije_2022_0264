@@ -28,7 +28,7 @@ const HomePage = () => {
             <p className="p18">Pristupite aukcijama, upravljajte ponudama i pratite njihov status u okviru centralizovanog informacionog sistema.</p>
             <Button
               variant="secondary"
-              onClick={() => navigate("/my-bids")}
+              onClick={() => navigate("/active-auctions")}
             >
               Zapocni
             </Button>
