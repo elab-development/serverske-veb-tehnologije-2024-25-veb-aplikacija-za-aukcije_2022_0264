@@ -1,30 +1,87 @@
-/* CELOKUPAN LAYOUT */
 .login-layout {
     display: flex;
     height: 100vh;
     width: 100%;
+    background: white;
+
 }
 
-/* LEVA STRANA – SLIKA */
+/* LEVA STRANA – GRADIENT I TEKST */
 .login-left {
     z-index: 1;
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     padding: 40px;
     position: relative;
+    background: #3F5EFB;
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(219, 70, 252, 1) 100%);
+    color: white;
+    text-align: center;
+    margin: 20px;
+    border-radius: 24px;
+    overflow: hidden;
 }
 
-.login-left-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.1;
-    background-image: url("../assets/login-bg.avif");
-    background-color: white;
-   
+/* LOGO - GORE LIJEVO */
+.login-left-logo {
+    align-self: flex-start;
+    z-index: 10;
+    width: 100%;
+    
+    text-align: left;
+}
 
+.logo-img {
+    height: 100px;
+    width: auto;
+    
+    object-fit: contain;
+}
+
+/* FOOTER TEKST - DOLE */
+.login-left-footer {
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+}
+
+.h4-login {
+    margin: 0 0 12px 0;
+    font-size: 17px;
+    font-weight: 300;
+    opacity: 0.9;
+    color: white;
+    text-align: left;
+}
+.login-paragraph{
+    margin-bottom: 24px;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+    color: rgb(101, 30, 116);
+    opacity: 0.9;
+}
+.h1-login2{
+    margin: 0;
+    text-align: left;
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0.95;
+}
+.h1-login3{
+    margin: 0;
+    text-align: left;
+    color: rgb(100, 29, 133);
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0.95;
 }
 
 
@@ -32,52 +89,66 @@
 /* DESNA STRANA – LOGIN */
 .login-right {
     flex: 1;
-    background: #f4f6f8;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 40px;
 }
 
-/* LOGIN CARD */
-.login-card {
-    width: 360px;
-    background: white;
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-}
+
 
 .login-card h2 {
     margin-top: 0;
+    margin-bottom: 24px;
     text-align: center;
-    color: #4b0082;
+    color: #764ba2;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 /* FORM */
 .login-form {
     display: grid;
-    gap: 12px;
+    gap: 14px;
+    margin-bottom: 16px;
 }
 
 .login-form input {
-    padding: 11px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 14px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
 .login-form input:focus {
     outline: none;
-    border-color: #6a0dad;
+    
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 /* BUTTON */
 .login-form button {
-    padding: 11px;
-    border-radius: 8px;
+    padding: 14px;
+    border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, #6a0dad, #4b0082);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-extra-actions1 {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: center;
+}       
+.login-form button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
 }
 
 /* da login layout zauzme ceo ekran */
@@ -89,10 +160,18 @@
 
 .h1-login {
     color: white;
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .p-login {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 18px;
+    margin: 0;
+    max-width: 400px;
+    line-height: 1.6;
 }
 
 
@@ -108,17 +187,35 @@
 
 /* REGISTER TEXT */
 .register-hint {
-    margin-top: 14px;
+    margin-top: 16px;
     font-size: 14px;
-    text-align: center;
+    text-align: left;
+    color: #666;
 }
 
 .register-hint button {
     background: none;
     border: none;
-    color: #6a0dad;
+    color: #667eea;
     cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.register-hint button:hover {
+    color: #764ba2;
     text-decoration: underline;
+    
+}
+
+/* EXTRA ACTIONS - KATEGORIJE I PROIZVODI DUGMIĆI */
+.login-extra-actions {
+    display: flex-verical;
+    
+    gap: 12px;
+    margin-top: 24px;
+    align-items: end;
 }
 
 /* BACKDROP */
@@ -136,7 +233,7 @@
 /* MODAL CARD */
 .modal {
     width: min(520px, 100%);
-    background: #fff;
+    background: #ffffff;
     border-radius: 18px;
     padding: 22px 22px 20px;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
@@ -149,6 +246,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    border-radius: 20px;
     margin-bottom: 14px;
 }
 
@@ -156,17 +254,17 @@
     margin: 0;
     font-size: 22px;
     font-weight: 700;
-    color: #111;
+    color: #ffffff;
 }
 
 /* X BUTTON */
 .modal-header button {
     width: 38px;
     height: 38px;
-    border-radius: 10px;
+    border-radius: 50px;
     border: 1px solid #e6e6e6;
-    background: #fafafa;
-    color: #111;
+    background: #8e5efc;
+    color: white;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -176,7 +274,9 @@
 }
 
 .modal-header button:hover {
-    background: #f1f1f1;
+    background: #8e5efc;
+
+    color: #111;
 }
 
 /* FORM */
@@ -196,7 +296,7 @@
 
 .modal-form input:focus {
     outline: none;
-    border-color: #6a0dad;
+    border-color: #9d7cb4;
     box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.12);
 }
 
@@ -210,7 +310,7 @@
     font-weight: 600;
     font-size: 15px;
     color: #fff;
-    background: linear-gradient(135deg, #6a0dad, #4b0082);
+    background: linear-gradient(135deg, #6a0dad, #4d5fff);
 }
 
 .modal-form button[type="submit"]:hover {
@@ -235,54 +335,115 @@
     font-size: 13px;
 }
 
-/* --- RESPONSIVE --- */
-
-/* Tablet i manje: smanji padding i card širinu */
 @media (max-width: 1024px) {
     .login-card {
-        width: min(380px, 92%);
-    }
-
-    .login-left-overlay {
+        width: min(360px, 90%);
         padding: 32px;
     }
 
-    .login-left-overlay h1 {
-        font-size: 34px;
+    .login-left {
+        margin: 30px 20px;
+        padding: 35px 25px;
+    }
+
+    .logo-img {
+        height: 45px;
+    }
+
+    .h1-login {
+        font-size: 40px;
+    }
+
+    .h1-login-footer {
+        font-size: 18px;
+    }
+
+    .p-login {
+        font-size: 16px;
     }
 }
 
-/* Mobilni: prebaci sa 2 kolone na 1 kolonu */
+
 @media (max-width: 768px) {
     .login-layout {
         flex-direction: column;
+        padding: 0;
     }
 
     .login-left {
-        height: 36vh;
-        /* slika gore */
+        height: 40vh;
+        justify-content: space-between;
+        padding: 25px 20px;
+        margin: 20px;
+        border-radius: 20px;
+    }
+
+    .logo-img {
+        height: 40px;
+    }
+
+    .login-left-content {
+        flex: 1;
+    }
+
+    .h1-login {
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .p-login {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .h4-login {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .h1-login-footer {
+        font-size: 16px;
     }
 
     .login-right {
-        height: 64vh;
-        /* forma dole */
-        padding: 18px;
+        height: 60vh;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        background: white;
     }
 
     .login-card {
-        width: min(420px, 100%);
+        width: 100%;
+        max-width: 360px;
+        padding: 28px;
     }
 
-    .login-left-overlay {
-        padding: 22px;
+    .login-card h2 {
+        font-size: 24px;
     }
 
-    .login-left-overlay h1 {
-        font-size: 28px;
+    .h1-login {
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .p-login {
+        font-size: 15px;
+    }
+
+    .login-form input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .login-form button {
+        padding: 12px;
+        font-size: 15px;
     }
 }
 
-/* Mali mobilni: još kompaktnije */
+
 @media (max-width: 420px) {
     .login-right {
         padding: 14px;

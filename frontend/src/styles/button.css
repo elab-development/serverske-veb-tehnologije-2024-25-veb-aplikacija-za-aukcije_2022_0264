@@ -12,17 +12,68 @@
   background: #111;
   color: #fff;
 }
+.ui-btn--thirdary {
+  color: #fff;
+  background-color: #000;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 12px;
+  line-height: 100%;
+}
+.ui-btn--thirdary:hover {
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 12px;
+  line-height: 100%;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+  transition: background-color 0.4s ease-out,
+  color 0.4s ease-out,
+  transform 0.2s ease-out,
+  box-shadow 0.2s ease-out;
+}
 .ui-btn--secondary:hover:not(:disabled) {
-  background-color: #111;
-  color: white;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.95),
+    rgba(250,250,250,0.8)
+  );
+  
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
   transition: background-color 0.4s ease-out,
   color 0.4s ease-out,
   transform 0.2s ease-out,
   box-shadow 0.2s ease-out;
 }
 .ui-btn--secondary {
-  background: #f1f1f1;
+  position: relative;
+  padding: 14px 36px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.9),
+    rgba(245,245,245,0.7)
+  );
+
+  border: 1px solid rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 10px 25px rgba(190, 54, 54, 0.08),
+    inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 0 -1px 1px rgba(0,0,0,0.05);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
   color: #111;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  
 }
 
 .ui-btn--link {

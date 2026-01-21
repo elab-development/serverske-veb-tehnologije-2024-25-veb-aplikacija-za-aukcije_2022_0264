@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import "../styles/login.css";
 import Button from "../components/Button.tsx";
-import Navigation from "../components/NavigationLogin.tsx";
 
 
 export default function LoginPage() {
@@ -50,11 +49,11 @@ export default function LoginPage() {
       }
 
       localStorage.setItem("token", token);
+
       
-      // Čuva is_admin status
       const isAdmin = res.data?.user?.is_admin || false;
       localStorage.setItem("is_admin", JSON.stringify(isAdmin));
-      
+
       navigate("/home", { replace: true });
     } catch (err) {
       setLoginError("Pogrešan email ili lozinka.");
@@ -107,14 +106,21 @@ export default function LoginPage() {
   };
 
   return (
-    <> <Navigation />
-    
-   
     <div className="login-layout">
       {/* Leva strana */}
       <div className="login-left">
-        <h1 className="h1-login">Online aukcije</h1>
-        <p className="p-login">Dobrodošli na veb aplikaciju za online aukcije</p>
+        {/* Logo gore levo */}
+        <div className="login-left-logo">
+          <img src="/images/logo/logo.png" alt="Logo loginpage" className="logo-img" />
+        </div>
+
+
+        {/* Tekst dole */}
+        <div className="login-left-footer">
+          <h4 className="h4-login">Možeš lako da</h4>
+          <h1 className="h1-login2">Postavljaš ponude na aukcije koje su aktivne kao i da pretražuješ proizvode koje se nalaze na aukcijama</h1>
+        </div>
+
         <div className="login-left1">
           <div className="login-left-overlay"></div>
         </div>
@@ -123,7 +129,8 @@ export default function LoginPage() {
       {/* Desna strana */}
       <div className="login-right">
         <div className="login-card">
-          <h2>Login</h2>
+          <h1 className="h1-login3">Dobrodosli nazad</h1>
+          <p className="login-paragraph">Prijavite se na svoj nalog kako biste učestvovali u aukcijama, pratili svoje ponude</p>
 
           <form onSubmit={handleLogin} className="login-form">
             <input
@@ -146,10 +153,10 @@ export default function LoginPage() {
 
             {/* Reusable Button - login */}
             <Button type="submit" variant="primary" disabled={loginLoading}>
-              {loginLoading ? "Ulogovanje..." : "Uloguj se"}
+              {loginLoading ? "Prijavljivanje..." : "Prijavi se"}
             </Button>
 
-            
+
           </form>
 
           <div className="register-hint">
@@ -158,6 +165,34 @@ export default function LoginPage() {
               registrujte se
             </Button>
             .
+          </div>
+
+          {/* Dugmići za Kategorije i Proizvode */}
+          <div className="login-extra-actions">
+            <h2>
+              Ili istrazite kategorije i proizvode bez prijave:
+            </h2>
+            <div className="login-extra-actions1">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => navigate("/categories")}
+              >
+                Idi na kategorije
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => navigate("/products")}
+              >
+                Idi na proizvode
+              </Button>
+            </div >
+            <div className="login-extra-actions2">
+              
+            </div>
+
+
           </div>
         </div>
       </div>
@@ -213,7 +248,7 @@ export default function LoginPage() {
         </div>
       )}
     </div>
-    </>
+
   );
 }
 
