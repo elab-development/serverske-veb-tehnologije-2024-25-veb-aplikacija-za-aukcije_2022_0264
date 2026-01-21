@@ -44,7 +44,7 @@ export default function AuthNavigation({ mode = "light" }: AuthNavigationProps) 
           <NavLink to="/admin/add" label="Dashboard" />
         )}
         <Button
-          variant="thirdary"
+          variant="primary"
           onClick={handleLogout}
         >
           Logout

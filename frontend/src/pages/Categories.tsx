@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 import AuthNavigation from "../components/AuthNavigation";
 import Navigation from "../components/NavigationLogin";
-import Card from "../components/CategoriesCard";
+import Card from "../components/CategoriesCard2";
 import Modal from "../components/Modal";
 import "../styles/categories.css";
+import Footer from "../components/Footer";
+import Button from "../components/Button";
 
 type Category = {
   id: number;
@@ -34,7 +36,7 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
@@ -75,12 +77,12 @@ export default function CategoriesPage() {
 
   return (
     <>
-      {isLoggedIn ? <AuthNavigation /> : <Navigation />}
+      {isLoggedIn ? <AuthNavigation mode="dark" /> : <Navigation />}
 
       <div className="page-container">
         <h2 className="h2-category">Kategorije</h2>
 
-        {loading && <p>Učitavanje...</p>}
+        {loading && <p className="loading">Učitavanje...</p>}
         {error && <p className="error-text">{error}</p>}
 
         {!loading && !error && categories.length === 0 && <p>Nema kategorija.</p>}
@@ -103,45 +105,47 @@ export default function CategoriesPage() {
         )}
       </div>
 
-      {/* Modal za proizvode po kategoriji */}
+
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-        <h3 style={{ color: "white", marginTop: 0, marginBottom: "16px" }}>
-          Proizvodi - {selectedCategory?.name}
-        </h3>
+        <div className="relative">
+          <div className="leftside">
+            <h3 style={{ color: "white", marginTop: 0, marginBottom: "16px" }}>
+              Proizvodi - {selectedCategory?.name}
+            </h3>
 
-        {productsLoading && <p style={{ color: "white" }}>Učitavanje...</p>}
-        {productsError && <p style={{ color: "#ff6b6b" }}>{productsError}</p>}
+            {productsLoading && <p style={{ color: "white" }}>Učitavanje...</p>}
+            {productsError && <p style={{ color: "#ff6b6b" }}>{productsError}</p>}
 
-        {!productsLoading && !productsError && categoryProducts.length === 0 && (
-          <p style={{ color: "white" }}>Nema proizvoda iz ove kategorije.</p>
-        )}
+            {!productsLoading && !productsError && categoryProducts.length === 0 && (
+              <p style={{ color: "white" }}>Nema proizvoda iz ove kategorije.</p>
+            )}
 
-        {!productsLoading && !productsError && categoryProducts.length > 0 && (
-          <ul style={{ color: "white", paddingLeft: "20px", margin: "0 0 16px 0" }}>
-            {categoryProducts.map((p) => (
-              <li key={p.id} style={{ marginBottom: "8px" }}>
-                {p.name}
-              </li>
-            ))}
-          </ul>
-        )}
+            {!productsLoading && !productsError && categoryProducts.length > 0 && (
+              <ul style={{ color: "white", paddingLeft: "20px", margin: "0 0 16px 0" }}>
+                {categoryProducts.map((p) => (
+                  <li key={p.id} style={{ marginBottom: "8px" }}>
+                    {p.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+           <div className="btn-absolute">
+          <Button
+            onClick={() => setModalOpen(false)}
+            variant="thirdary"
+          >
+            x
+          </Button>
+        </div>
 
-        <button
-          onClick={() => setModalOpen(false)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#4ade80",
-            color: "black",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Zatvori
-        </button>
-      </Modal>
+        
+
+       
+
+      </div>
+    </Modal >
+      <Footer />
     </>
   );
 }

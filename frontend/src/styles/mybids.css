@@ -1,15 +1,41 @@
-.mybids-wrapper{
-
- min-height: 100vh;
-  background: linear-gradient(135deg, #181441 0%, #9348d1 50%, #121255 100%);
+.mybids-wrapper {
+  position: relative;
+  min-height: 85vh;
+  background: #181441;
   padding-top: 80px;
 
 }
+
 .mybids-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 40px 20px;
-  
+
+}
+
+.ring5 {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  animation: float 5s ease-in-out infinite;
+  width: 150px;
+}
+
+.ring6 {
+
+  position: absolute;
+  bottom: 0%;
+  right: 0;
+  animation: float 4s ease-in-out infinite;
+  width: 200px;
+}
+
+.ring7 {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  width: 250px;
+  animation: float 3s ease-in-out infinite;
 }
 
 .mybids-nav {
@@ -60,9 +86,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -75,7 +104,7 @@
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(156, 92, 224, 0.3), 0 0 60px rgba(156, 92, 224, 0.1);
-  animation: float 3s ease-in-out infinite;
+
   transition: all 0.3s ease;
   position: relative;
 }
@@ -109,7 +138,7 @@
 .mybids-item {
   padding: 12px 16px;
   background: rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #16bd31;
+  border-left: 4px solid #ffffff;
   border-radius: 6px;
   color: white;
   transition: all 0.3s ease;
@@ -142,12 +171,16 @@
 }
 
 .mybids-auction-item {
-  padding: 12px 16px;
+  padding: 12px 12px;
   background: rgba(74, 222, 128, 0.1);
-  border-left: 4px solid #4ade80;
+  border-left: 4px solid #ffffff;
   border-radius: 6px;
   color: white;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
 }
 
 .mybids-auction-item:hover {
@@ -211,9 +244,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }

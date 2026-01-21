@@ -1,0 +1,112 @@
+.ui-card.ui-card--overlay{
+  --radius: 22px;
+  overflow: hidden;
+  position: relative;
+  height: 380px;
+  border: 1px solid rgb(8, 1, 8);
+  box-shadow: 0 20px 55px rgba(12, 10, 10, 0.25);
+  cursor: pointer;
+  transform: translateZ(0);
+  outline: none;
+  border-radius: 20px;
+}
+
+
+.ui-card__bg{
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-bg);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.03);
+  filter: saturate(1.05);
+}
+
+.ui-card.ui-card--overlay::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(131, 52, 155, 0.61)60%,
+    rgb(49, 12, 58) 100%
+  );
+  z-index: 1;
+}
+
+.ui-card__content{
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #ffffff;
+}
+
+.ui-card__title{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.ui-card__desc{
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: 0.88;
+}
+
+.ui-card__desc--muted{
+  opacity: 0.7;
+}
+
+
+.ui-card__cta{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: #fff;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.ui-card__cta-arrow{
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+
+.ui-card.ui-card--overlay:hover{
+  transform: translateY(-4px);
+  transition: transform 200ms ease;
+}
+.ui-card.ui-card--overlay:hover .ui-card__bg{
+  transform: scale(1.08);
+  transition: transform 350ms ease;
+}
+.ui-card.ui-card--overlay:hover .ui-card__cta{
+  background: rgba(0,0,0,0.30);
+  transition: background 200ms ease;
+}
+
+/* keyboard focus */
+.ui-card.ui-card--overlay:focus-visible{
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.35), 0 20px 55px rgba(0,0,0,0.25);
+}

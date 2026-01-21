@@ -11,23 +11,34 @@
 .ui-btn--primary {
   background: #111;
   color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.ui-btn--primary:hover {
+  background: #ffffff;
+  color: #000000;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  transition: background-color 0.4s ease-out,
+  color 0.4s ease-out,
+  transform 0.2s ease-out,
+  box-shadow 0.2s ease-out;
 }
 .ui-btn--thirdary {
-  color: #fff;
-  background-color: #000;
-  border-radius: 10px;
-  font-size: 14px;
-  padding: 12px;
-  line-height: 100%;
-}
-.ui-btn--thirdary:hover {
   color: #000000;
   background-color: #ffffff;
-  border-radius: 10px;
-  font-size: 14px;
-  padding: 12px;
-  line-height: 100%;
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+  border-radius: 9000px;
+  font-size: 20px;
+  padding: 8px 12px 8px 12px;
+}
+.ui-btn--thirdary:hover {
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 9000px;
+  font-size: 20px;
+  padding: 8px 12px 8px 12px;
   transition: background-color 0.4s ease-out,
   color 0.4s ease-out,
   transform 0.2s ease-out,

@@ -1,7 +1,7 @@
 .nav {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 12px 24px;
+  padding-top: 20px;
   display: flex;
   position: absolute;
   inset: 0% 0% auto;
@@ -21,18 +21,22 @@
   list-style: 100%;
 }
 .nav-actions {
-  grid-column-gap: 12px;
+  position: static;
+  grid-column-gap: 30px;
   grid-row-gap: 12px;
   justify-content: space-between;
   align-items: center;
   display: flex;
-  gap: 12px;
+  gap: 30pxpx;
 }
 .nav__logoWrap{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;;
+  justify-content: space-between;
+  position: absolute;
+  left: 12px;
+
 }
 .nav-link{
    color: #111;
@@ -70,8 +74,10 @@
 }
 .nav-right{
   display: flex;
+  position: absolute;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  right: 12px;
 }

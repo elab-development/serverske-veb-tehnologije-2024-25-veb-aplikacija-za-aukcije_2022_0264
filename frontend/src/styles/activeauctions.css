@@ -1,7 +1,8 @@
 .activeauctions-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #090530 0%, #9348d1 50%, #24243e 100%);
+  background: #090530;
   padding-top: 80px;
+  position: relative;
 }
 
 .activeauctions-container {
@@ -20,7 +21,7 @@
   color: white;
   font-size: 50px;
   margin: 0 0 10px 0;
-  text-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+  text-shadow: 0 4px 15px rgba(189, 243, 209, 0.3);
   background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -31,6 +32,49 @@
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.2em;
   margin: 0;
+}
+
+.ring1 {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  width: 350px;
+  animation: float 5s ease-in-out infinite;
+}
+
+.ring2 {
+  position: absolute;
+  top: 12%;
+  right: 0;
+animation: float 3s ease-in-out infinite;
+  width: 200px;
+}
+
+.ring3 {
+  position: absolute;
+  top: 12%;
+  left: 30%;
+  animation: float 4s ease-in-out infinite;
+  width: 200px;
+}
+
+.ring4 {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .activeauctions-error {
@@ -69,6 +113,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -80,6 +125,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -143,9 +189,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.8;
   }
@@ -218,12 +267,13 @@
   margin: 15px 0 20px 0;
   font-weight: 100;
 }
-.modal-h2{
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 300;
-    margin: 0 0 10px 0;
-    
+
+.modal-h2 {
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 300;
+  margin: 0 0 10px 0;
+
 }
 
 .modal-info {
@@ -286,17 +336,17 @@
 
 .modal-buttons .ui-btn--secondary[type="submit"] {
   background: white !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
   color: #111 !important;
   font-weight: 500;
   font-size: 18px;
   border-radius: 500px;
-  box-shadow: 0 10px 25px rgba(190, 54, 54, 0.08), inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1px 1px rgba(0,0,0,0.05) !important;
+  box-shadow: 0 10px 25px rgba(190, 54, 54, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9), inset 0 -1px 1px rgba(0, 0, 0, 0.05) !important;
 }
 
 .modal-buttons .ui-btn--secondary[type="submit"]:hover:not(:disabled) {
   background: #f5f5f5 !important;
-  border-color: rgba(0,0,0,0.12) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
 

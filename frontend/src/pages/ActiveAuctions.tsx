@@ -5,6 +5,7 @@ import Modal from "../components/Modal";
 import "../styles/activeauctions.css";
 import AuthNavigation from "../components/AuthNavigation";
 import Button from "../components/Button";
+import Footer from "../components/Footer";
 type Auction = {
   id: number;
   product_name?: string;
@@ -145,6 +146,10 @@ export default function ActiveAuctionsPage() {
       <AuthNavigation mode="dark" />
 
       <div className="activeauctions-wrapper">
+        <img src="../../public/images/assets/ring1.png" alt="Background" className="ring1"></img>
+        <img src="../../public/images/assets/ring2.png" alt="Background" className="ring2"></img>
+        <img src="../../public/images/assets/ring3.png" alt="Background" className="ring3"></img>
+        <img src="../../public/images/assets/ring4.png" alt="Background" className="ring4"></img>
         <div className="activeauctions-container">
           <div className="activeauctions-header">
             <h1 className="activeauctions-title">Dostupne aukcije</h1>
@@ -285,6 +290,7 @@ export default function ActiveAuctionsPage() {
           </form>
         </Modal>
       )}
+      <Footer />
     </>
   );
 }

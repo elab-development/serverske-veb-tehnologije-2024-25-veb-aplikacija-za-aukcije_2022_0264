@@ -4,7 +4,8 @@ import api from "../api/api";
 import Modal from "../components/Modal";
 import "../styles/mybids.css";
 import AuthNavigation from "../components/AuthNavigation";
-
+import Button from "../components/Button";
+import Footer from "../components/Footer";
 
 type Bid = {
   id: number;
@@ -161,16 +162,19 @@ export default function MyBidsPage() {
     }
   };
 
-  /* ================= RENDER ================= */
+  
 
   return (
     <>
       <AuthNavigation  mode="dark"/>
       <div className="mybids-wrapper">
+        <img src="../../public/images/assets/ring5.png" alt="Background" className="ring5"></img>
+        <img src="../../public/images/assets/ring6.png" alt="Background" className="ring6"></img>
+        <img src="../../public/images/assets/ring7.png" alt="Background" className="ring7"></img>
         <div className="mybids-container">
 
           <div className="mybids-grid">
-            {/* ================= LEFT: USER BIDS ================= */}
+            
             <div className="mybids-section">
               <h3>Moje ponude</h3>
 
@@ -199,7 +203,7 @@ export default function MyBidsPage() {
               )}
             </div>
 
-            {/* ================= RIGHT: AUCTIONS ================= */}
+           
             <div className="mybids-section">
               <h3>Dostupne aukcije</h3>
 
@@ -239,12 +243,13 @@ export default function MyBidsPage() {
                             : "—"}
                         </p>
 
-                        <button
-                          className="mybids-button"
+                        <Button
+                          
+                          variant="secondary"
                           onClick={() => handleBidClick(auction)}
                         >
-                          Uloži ponudu
-                        </button>
+                          Napravi ponudu
+                        </Button>
                       </div>
                     );
                   })}
@@ -253,7 +258,7 @@ export default function MyBidsPage() {
             </div>
           </div>
 
-          {/* ================= MODAL ================= */}
+          
           <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
             <div className="mybids-modal-content">
               <h3>
@@ -293,7 +298,8 @@ export default function MyBidsPage() {
 
         </div>
       </div>
+      <Footer />
     </>
-
+  
   );
 }
