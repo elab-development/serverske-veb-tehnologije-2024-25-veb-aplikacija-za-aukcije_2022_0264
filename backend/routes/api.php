@@ -72,9 +72,6 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::resource('auctions', AuctionController::class)
         ->only(['store', 'update', 'destroy']);
 
-    
-
-    Route::get('/auctions/export', [AuctionController::class, 'exportCsv']);
 
 });
 

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Mogucnosti from "./pages/Mogucnosti";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Categories from "./pages/Categories";
@@ -23,6 +24,15 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/categories" element={<Categories/>} />
         <Route path="/products" element={<Products/>} />
+
+        <Route
+          path="/mogucnosti"
+          element={
+            <PrivateRoute>
+              <Mogucnosti />
+            </PrivateRoute>
+          }
+        />
 
         <Route
           path="/home"

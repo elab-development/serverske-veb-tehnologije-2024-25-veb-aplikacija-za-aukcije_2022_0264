@@ -105,7 +105,7 @@ class AuctionController extends Controller
 
     public function exportCsv()
     {
-        $auctions = Auction::with('category', 'user')->get();
+        $auctions = Auction::with('user')->get();
 
         $headers = [
             'Content-Type' => 'text/csv',
@@ -123,7 +123,6 @@ class AuctionController extends Controller
                 'Highest Bid',
                 'Start Time',
                 'End Time',
-                'Category',
                 'User'
             ]);
 
@@ -136,7 +135,6 @@ class AuctionController extends Controller
                     $auction->highest_bid,
                     $auction->start_time,
                     $auction->end_time,
-                    $auction->category->name ?? 'N/A',
                     $auction->user->name ?? 'N/A',
                 ]);
             }

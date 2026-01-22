@@ -9,7 +9,6 @@ interface AddProductModalProps {
 const AddProductModal = ({ onClose }: AddProductModalProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categories, setCategories] = useState<any[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -23,7 +22,7 @@ const AddProductModal = ({ onClose }: AddProductModalProps) => {
     api.get("/categories").then((res) => {
       setCategories(res.data?.categories || []);
     });
-  }, []);
+  });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,7 +45,6 @@ const AddProductModal = ({ onClose }: AddProductModalProps) => {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("price", price);
       if (categoryId) formData.append("category_id", categoryId);
       if (imageFile) formData.append("image", imageFile);
 
@@ -89,18 +87,6 @@ const AddProductModal = ({ onClose }: AddProductModalProps) => {
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="Unesite naziv proizvoda"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Cena *</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                  placeholder="0.00"
                 />
               </div>
             </div>
