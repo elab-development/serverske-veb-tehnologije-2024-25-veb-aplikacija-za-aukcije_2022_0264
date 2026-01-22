@@ -82,7 +82,12 @@ export default function Mogucnosti() {
             </>
           )}
           <h3 style={{marginTop:32}}>Pokrenite nove mogućnosti i uđite u svet aukcija!</h3>
-          <button className="mogucnosti-download">SKINI FAJL</button>
+          <button
+            className="mogucnosti-download"
+            onClick={() => window.location.href = "http://127.0.0.1:8000/api/auctions/export"}
+          >
+            SKINI FAJL
+          </button>
         </div>
       </div>
       <footer className="mogucnosti-footer">&copy; {new Date().getFullYear()} Aukcijska platforma. Sva prava zadržana.</footer>
