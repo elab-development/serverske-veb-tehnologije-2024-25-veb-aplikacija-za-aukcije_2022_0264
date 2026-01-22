@@ -9,6 +9,7 @@ interface AddProductModalProps {
 const AddProductModal = ({ onClose }: AddProductModalProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categories, setCategories] = useState<any[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -45,6 +46,7 @@ const AddProductModal = ({ onClose }: AddProductModalProps) => {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
+      formData.append("price", price);
       if (categoryId) formData.append("category_id", categoryId);
       if (imageFile) formData.append("image", imageFile);
 
@@ -91,6 +93,18 @@ const AddProductModal = ({ onClose }: AddProductModalProps) => {
               </div>
             </div>
 
+            <div className="form-group">
+              <label>Cena *</label>
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                min="0"
+                step="0.01"
+                placeholder="Unesite cenu proizvoda"
+              />
+            </div>
             <div className="form-group">
               <label>Kategorija</label>
               <select
