@@ -1,0 +1,347 @@
+.ourteam {
+  padding: 50px;
+  color: #fff;
+  background: #07070c;
+}
+
+.ourteam__section {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ourteam__header {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.ourteam__title {
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: white;
+}
+
+.ourteam__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 22px;
+}
+
+
+.ourteam__card {
+  border-radius:10px;
+  border: 1px solid rgba(216, 81, 81, 0);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.ourteam__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ourteam__imageWrap {
+  width: 100%;
+  aspect-ratio: 1 / 1; 
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ourteam__img {
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+  display: block;
+  object-position: top;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+
+.ourteam__meta {
+  padding: 14px 14px 16px;
+  text-align: left;
+}
+
+.ourteam__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ourteam__role {
+  margin: 6px 0 0;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+  padding: 50px 0;
+}
+
+.marquee__track {
+  display: flex;
+  gap: 60px;
+  width: max-content;
+  animation: marquee-scroll 18s linear infinite;
+}
+
+.marquee__track span {
+  font-size: clamp(48px, 8vw, 140px);
+  font-weight: 700;
+  white-space: nowrap;
+
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  
+}
+.ourteam__card--click {
+  cursor: pointer;
+}
+.ourteam__card--click:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.12);
+}
+
+.team-details {
+  max-width: 1100px;
+  margin: 60px auto 0;
+  padding: 0 24px 64px;
+}
+
+.team-details__title {
+  font-size: 50px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  color: white;
+}
+
+.team-details__list {
+  display: grid;
+  gap: 20px;
+}
+
+.team-details__card {
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 18px;
+}
+
+.team-details__top {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.team-details__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.team-details__name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.team-details__role {
+  margin: 4px 0 0;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+}
+
+.team-details__bio {
+  margin: 12px 0 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+.team-details__row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.team-details__label {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.team-details__tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.team-details__tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+}
+
+.team-details__contacts {
+  margin-top: 12px;
+}
+
+.team-details__contact {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+}
+
+.about-auctions {
+  max-width: 1100px;
+  margin: 70px auto 0;
+  padding: 0 24px 64px;
+
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+.about-auctions__title {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.about-auctions__text {
+  margin: 0 0 20px;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+  font-size: 14px;
+  max-width: 520px;
+}
+
+.about-auctions__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.about-auctions__contact:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.about-auctions__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Right side metrics */
+.about-auctions__right {
+  display: grid;
+  gap: 18px;
+}
+
+.metric__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.metric__label {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 650;
+  font-size: 14px;
+}
+
+.metric__value {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 650;
+  font-size: 14px;
+}
+
+.metric__bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.metric__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(60, 120, 255, 0.95), rgba(100, 180, 255, 0.95));
+  box-shadow: 0 10px 30px rgba(60, 120, 255, 0.25);
+}
+
+
+@media (max-width: 900px) {
+  .about-auctions {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .about-auctions__text {
+    max-width: 100%;
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+@media (max-width: 900px) {
+  .ourteam__grid {
+    grid-template-columns: 1fr;
+  }
+  .ourteam__title {
+    font-size: 36px;
+  }
+}

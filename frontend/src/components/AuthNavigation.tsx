@@ -34,9 +34,6 @@ export default function AuthNavigation({ mode = "light" }: AuthNavigationProps) 
         <NavLink to="/active-auctions" label="Aukcije" />
         <NavLink to="/categories" label="Kategorije" />
         <NavLink to="/products" label="Proizvodi" />
-        <NavLink to="/mogucnosti" label="Mogucnosti" />
-        
-
         
       </div>
       <div className="nav-right"> 

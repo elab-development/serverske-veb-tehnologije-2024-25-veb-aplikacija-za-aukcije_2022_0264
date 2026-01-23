@@ -2,8 +2,8 @@ import "../styles/Mogucnosti.css";
 import AuthNavigation from "../components/AuthNavigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-
+import Footer from "../components/Footer";
+import Button from "../components/Button";
 interface ApiData {
   title: string;
   info: string;
@@ -48,6 +48,7 @@ export default function Mogucnosti() {
   }, []);
 
   return (
+    
     <div className="mogucnosti-page">
       <AuthNavigation mode="dark" />
       <div className="mogucnosti-container">
@@ -81,16 +82,16 @@ export default function Mogucnosti() {
               </div>
             </>
           )}
-          <h3 style={{marginTop:32}}>Pokrenite nove mogućnosti i uđite u svet aukcija!</h3>
-          <button
-            className="mogucnosti-download"
-            onClick={() => window.location.href = "http://127.0.0.1:8000/api/auctions/export"}
-          >
-            SKINI FAJL
-          </button>
+          <h3 style={{marginTop:32}}>Klikom na dugme, preuzimate listu aukcija</h3>
+          
+          <Button 
+            variant="secondary"  
+            onClick={() => window.location.href = "http://127.0.0.1:8000/api/auctions/export"}>
+            CSV
+          </Button>
         </div>
       </div>
-      <footer className="mogucnosti-footer">&copy; {new Date().getFullYear()} Aukcijska platforma. Sva prava zadržana.</footer>
+      <Footer/>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Categories from "./pages/Categories";
 import Products from "./pages/Products";
 import MyBids from "./pages/MyBids";
 import AdminAdd from "./pages/Dashboard";
+import OurTeam from "./pages/OurTeam";
 import ActiveAuctions from "./pages/ActiveAuctions";
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem("token");
@@ -18,13 +19,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Root: ako ima token -> /home, ako nema -> /login */}
+
         <Route path="/" element={<Navigate to={token ? "/home" : "/login"} replace />} />
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/categories" element={<Categories/>} />
-        <Route path="/products" element={<Products/>} />
-
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/products" element={<Products />} />
+        
         <Route
           path="/mogucnosti"
           element={
@@ -70,7 +71,12 @@ export default function App() {
           }
         />
 
-        {/* fallback */}
+        <Route path="/ourteam" element={
+            <PrivateRoute>
+              <OurTeam />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
