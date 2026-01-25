@@ -46,15 +46,33 @@ const HomePage = () => {
               <p className="p20">Naša aplikacija je informacioni sistem razvijen sa ciljem digitalizacije aukcijskog procesa. Omogućava registrovanim korisnicima efikasno učestvovanje u aukcijama, evidenciju ponuda i jasan uvid u rezultate aukcija, uz primenu savremenih veb tehnologija.</p>
             </div>
             <div className="section-bottom">
-              <div className="sponsors">
-                <img src="../images/sponsors/react.png" alt="react" className="sponsor-image"></img>
-                <img src="../images/sponsors/typescript.png" alt="typescript" className="sponsor-image"></img>
-                <img src="../images/sponsors/docker.png" alt="docker" className="sponsor-image2"></img>
-                <img src="../images/sponsors/laravel.png" alt="laravel" className="sponsor-image"></img>
-                <img src="../images/sponsors/mysql.png" alt="mysql" className="sponsor-image"></img>
-                <img src="../images/sponsors/github.png" alt="github" className="sponsor-image"></img>
+              <div className="marquee">
+                <div className="marquee-track">
+                  
+                  <img src="../images/sponsors/react.png" alt="react" className="sponsor-image" />
+                  <img src="../images/sponsors/typescript.png" alt="typescript" className="sponsor-image" />
+                  <img src="../images/sponsors/docker.png" alt="docker" className="sponsor-image2" />
+                  <img src="../images/sponsors/laravel.png" alt="laravel" className="sponsor-image" />
+                  <img src="../images/sponsors/mysql.png" alt="mysql" className="sponsor-image" />
+                  <img src="../images/sponsors/github.png" alt="github" className="sponsor-image" />
+
+                  <img src="../images/sponsors/react.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/typescript.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/docker.png" alt="" className="sponsor-image2" />
+                  <img src="../images/sponsors/laravel.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/mysql.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/github.png" alt="" className="sponsor-image" />
+
+                  <img src="../images/sponsors/react.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/typescript.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/docker.png" alt="" className="sponsor-image2" />
+                  <img src="../images/sponsors/laravel.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/mysql.png" alt="" className="sponsor-image" />
+                  <img src="../images/sponsors/github.png" alt="" className="sponsor-image" />
+
+                </div>
               </div>
-              <p>Nasi sponzori</p>
+
             </div>
             <div className="section-middle">
               <div className="grid-block">
