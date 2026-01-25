@@ -1,4 +1,4 @@
-/* Blok za sve bidove */
+
 .admin-bids-block {
   background: #fff;
   border-radius: 22px;
@@ -43,24 +43,26 @@
   border-radius: 6px;
 }
 .admin-add-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  padding: 60px 20px 30px 20px;
+  padding-top: 40px;
+  min-height:50vh;
+  background: #090530;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   width: 100vw;
   box-sizing: border-box;
+  margin-bottom: 100px;
+  
 }
-/* Wrapper za 3 bloka */
+
 .admin-lists-wrapper {
   display: flex;
   flex-direction: row;
   gap: 32px;
   width: 100%;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 50px;
   margin-bottom: 40px;
 }
 

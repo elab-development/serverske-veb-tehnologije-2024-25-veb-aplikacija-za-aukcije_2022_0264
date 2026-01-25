@@ -1,7 +1,10 @@
 .p-24 {
     color: white;
 }
-
+.root{
+  background-color: rgb(254, 235, 255);
+  z-index: -1;
+}
 .dugmePocetna {
     background-color: white;
     color: black;
@@ -13,7 +16,7 @@
 
 .hero {
     height: 80vh;
-    padding: 72px 24px 24px;
+    padding:  24px 24px;
 }
 
 .hero-content-wrap {
@@ -24,6 +27,7 @@
     padding: 62px 24px 24px;
     display: flex;
     position: relative;
+    z-index: 999;
 }
 
 .hero-image {
@@ -200,4 +204,152 @@
 }
 .footer{
     background-color: #2B2741;
+}
+.hero,
+.section {
+  box-sizing: border-box;
+}
+
+.hero-content-wrap,
+.section-wrapper,
+.section-top,
+.section-bottom,
+.section-middle,
+.sponsors {
+  min-width: 0;
+}
+
+
+.hero-image,
+.grid-background {
+  display: block;
+}
+
+
+@media (max-width: 991px) {
+  .hero {
+    height: auto;
+    padding: 64px 16px 16px;
+  }
+
+  .hero-content-wrap {
+    padding: 56px 16px 24px;
+  }
+
+  .hero-content {
+    align-items: flex-start;
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .h50 {
+    font-size: 38px;
+    line-height: 1.05;
+  }
+
+  .p20 {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .section {
+    padding: 56px 16px 24px;
+  }
+
+  .section-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .section-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  .sponsors {
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .section-middle {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-block,
+  .grid-block2 {
+    height: 260px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-content-wrap {
+    padding: 48px 14px 18px;
+  }
+
+  .hero-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .h50 {
+    font-size: 30px;
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  .p18,
+  .p18-left-white,
+  .p20 {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .section-wrapper {
+    gap: 28px;
+  }
+
+  .p15,
+  .p15-white {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .grid-block,
+  .grid-block2 {
+    height: auto;
+    min-height: 220px;
+    padding: 18px;
+  }
+
+  .section-bottom {
+    padding: 16px 0;
+  }
+
+  .sponsor-image,
+  .sponsor-image2 {
+    max-height: 34px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .hero {
+    padding: 56px 12px 12px;
+  }
+
+  .hero-content-wrap {
+    padding: 44px 12px 16px;
+  }
+
+  .h50 {
+    font-size: 26px;
+  }
+
+  .sponsors {
+    gap: 12px;
+  }
 }

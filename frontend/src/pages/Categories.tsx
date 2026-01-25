@@ -79,7 +79,7 @@ export default function CategoriesPage() {
     <>
       {isLoggedIn ? <AuthNavigation mode="dark" /> : <Navigation />}
 
-      <div className="page-container">
+      <div className="page-container2">
         <h2 className="h2-category">Kategorije</h2>
 
         {loading && <p className="loading">Učitavanje...</p>}

@@ -3,7 +3,7 @@ import Modal from "../components/Modal";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import AuthNavigation from "../components/AuthNavigation";
-import "../styles/adminadd.css";
+import "../styles/dashboard.css";
 import AddCategoryModal from "../components/modals/AddCategoryModal";
 import AddProductModal from "../components/modals/AddProductModal";
 import AddAuctionModal from "../components/modals/AddAuctionModal";
@@ -70,7 +70,7 @@ const AdminAdd = () => {
 
   return (
     <>
-      <AuthNavigation />
+      <AuthNavigation mode="dark"/>
       <div className="admin-add-container">
         <h1 className="admin-add-title">Administracija</h1>
         <p className="admin-add-subtitle">Odaberite šta želite da dodate</p>

@@ -1,14 +1,19 @@
-.page-container {
-   min-height: 100vh;   /* umesto height */
+.page-container2 {  
   width: 100%;
   box-sizing: border-box;
   background: #090530;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+
 }
 
 .h2-category {
    color: white;
   font-size: 50px;
   margin: 0 0 20px 0;
+  text-align: center;
   
 }
 .relative{
