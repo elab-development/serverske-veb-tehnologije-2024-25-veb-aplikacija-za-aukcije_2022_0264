@@ -32,7 +32,7 @@ export default function Footer({
         <div className="contact-div">
             <p className="p10">Ukoliko imate nekih pitanja, kontaktirajte nas!</p>
             <div className="email-contanct">
-              <p className="p101">email : onlineaukcije@bidx.com</p>
+              <p className="p101">email : aukcije2026@gmail.com</p>
               <p className="p101">kontakt : 060300300</p>
               </div>
         </div>

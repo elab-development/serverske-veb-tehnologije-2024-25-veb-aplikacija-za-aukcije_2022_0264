@@ -35,7 +35,7 @@ services:
       DB_DATABASE: auctions
       DB_USERNAME: root
       DB_PASSWORD: ""
-    command: php artisan serve --host=0.0.0.0 --port=8000
+    command: sh -c "php artisan serve --host=0.0.0.0 --port=8000 & while true; do php artisan schedule:run; sleep 60; done"
     depends_on:
       db:
         condition: service_healthy
