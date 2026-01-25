@@ -180,9 +180,9 @@ export default function OurTeamPage() {
                             paginaciju i stabilan sistem ponuda u realnom vremenu.
                         </p>
 
-                        <a className="about-auctions__contact" href="mailto:aukcije@prisma.com">
+                        <a className="about-auctions__contact" href="mailto:aukcije2026@gmail.com">
                             <span className="about-auctions__icon" aria-hidden="true">✉</span>
-                            <span>onlineaukcije@bidx.com</span>
+                            <span>aukcije2026@gmail.com</span>
                         </a>
                     </div>
 

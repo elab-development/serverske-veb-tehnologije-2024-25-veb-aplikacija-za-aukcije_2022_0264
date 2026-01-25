@@ -8,6 +8,9 @@ import MyBids from "./pages/MyBids";
 import AdminAdd from "./pages/Dashboard";
 import OurTeam from "./pages/OurTeam";
 import ActiveAuctions from "./pages/ActiveAuctions";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" replace />;
@@ -21,6 +24,8 @@ export default function App() {
       <Routes>
 
         <Route path="/" element={<Navigate to={token ? "/home" : "/login"} replace />} />
+        <Route path="/password-reset/:token" element={<ResetPasswordPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/categories" element={<Categories />} />

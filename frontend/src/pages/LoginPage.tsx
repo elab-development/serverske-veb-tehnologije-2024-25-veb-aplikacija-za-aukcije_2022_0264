@@ -8,13 +8,13 @@ import Button from "../components/Button.tsx";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  // LOGIN
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
 
-  // REGISTER POPUP
+
   const [showRegister, setShowRegister] = useState(false);
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [regLoading, setRegLoading] = useState(false);
   const [regSuccess, setRegSuccess] = useState(false);
 
-  // ako vec postoji token -> idi na home
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) navigate("/home", { replace: true });
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
       localStorage.setItem("token", token);
 
-      
+
       const isAdmin = res.data?.user?.is_admin || false;
       localStorage.setItem("is_admin", JSON.stringify(isAdmin));
 
@@ -165,9 +165,20 @@ export default function LoginPage() {
               registrujte se
             </Button>
             .
+
+            <span className="hint-sep"> • </span>
+
+            <Button
+              type="button"
+              variant="link"
+              onClick={() => {console.log("click forgot"); navigate("/forgot-password");}}
+            >
+              Zaboravili ste lozinku?
+            </Button>
           </div>
 
-          {/* Dugmići za Kategorije i Proizvode */}
+
+         
           <div className="login-extra-actions">
             <h2>
               Ili istrazite kategorije i proizvode bez prijave:
@@ -189,7 +200,7 @@ export default function LoginPage() {
               </Button>
             </div >
             <div className="login-extra-actions2">
-              
+
             </div>
 
 

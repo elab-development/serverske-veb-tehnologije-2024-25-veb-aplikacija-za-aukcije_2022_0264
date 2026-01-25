@@ -84,6 +84,10 @@
     opacity: 0.95;
 }
 
+.hint-sep {
+  opacity: 0.4;
+  margin: 0 8px;
+}
 
 
 /* DESNA STRANA – LOGIN */
