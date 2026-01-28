@@ -15,6 +15,21 @@ const AdminAdd = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showAuctionModal, setShowAuctionModal] = useState(false);
+  const [editAuctionModalOpen, setEditAuctionModalOpen] = useState(false);
+  const [editAuctionDesc, setEditAuctionDesc] = useState("");
+  const [editAuctionEnd, setEditAuctionEnd] = useState("");
+  const [editAuctionLoading, setEditAuctionLoading] = useState(false);
+  const [editAuctionError, setEditAuctionError] = useState("");
+
+  const [editProductModalOpen, setEditProductModalOpen] = useState(false);
+  const [editProductName, setEditProductName] = useState("");
+  const [editProductLoading, setEditProductLoading] = useState(false);
+  const [editProductError, setEditProductError] = useState("");
+
+  const [editCategoryModalOpen, setEditCategoryModalOpen] = useState(false);
+  const [editCategoryName, setEditCategoryName] = useState("");
+  const [editCategoryLoading, setEditCategoryLoading] = useState(false);
+  const [editCategoryError, setEditCategoryError] = useState("");
 
   // Ako nije admin, vrati ga
   if (!isAdmin) {
@@ -182,7 +197,51 @@ const AdminAdd = () => {
                             }
                           }
                         }}>Obriši aukciju</button>
+                        <button style={{background:'#fbbf24',color:'#3B0270',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={() => {
+                          setEditAuctionDesc(selectedAuction?.description || "");
+                          setEditAuctionEnd(selectedAuction?.end_time ? selectedAuction.end_time.slice(0,16) : "");
+                          setEditAuctionError("");
+                          setEditAuctionModalOpen(true);
+                        }}>Izmeni</button>
                       </div>
+                    </div>
+                  </Modal>
+                  {/* Modal za izmenu aukcije */}
+                  <Modal open={editAuctionModalOpen} onClose={()=>setEditAuctionModalOpen(false)}>
+                    <div style={{background:'#fff', borderRadius:10, padding:20, color:'#3B0270', minWidth:260}}>
+                      <h3 style={{marginTop:0, marginBottom:16, color:'#7c3aed'}}>Izmeni aukciju</h3>
+                      <form onSubmit={async e => {
+                        e.preventDefault();
+                        setEditAuctionLoading(true);
+                        setEditAuctionError("");
+                        try {
+                          await api.put(`/auctions/${selectedAuction.id}`, {
+                            description: editAuctionDesc,
+                            end_time: editAuctionEnd
+                          });
+                          setAuctions(prev => prev.map((a:any) => a.id === selectedAuction.id ? { ...a, description: editAuctionDesc, end_time: editAuctionEnd } : a));
+                          setEditAuctionModalOpen(false);
+                          setModalOpen(false);
+                        } catch {
+                          setEditAuctionError('Greška pri izmeni aukcije.');
+                        } finally {
+                          setEditAuctionLoading(false);
+                        }
+                      }}>
+                        <div style={{marginBottom:14}}>
+                          <label style={{fontWeight:600}}>Opis aukcije:</label><br/>
+                          <textarea value={editAuctionDesc} onChange={e=>setEditAuctionDesc(e.target.value)} style={{width:'100%',padding:'8px',borderRadius:6,border:'1px solid #ccc',marginTop:4,minHeight:60}}/>
+                        </div>
+                        <div style={{marginBottom:14}}>
+                          <label style={{fontWeight:600}}>Datum završetka:</label><br/>
+                          <input type="datetime-local" value={editAuctionEnd} onChange={e=>setEditAuctionEnd(e.target.value)} style={{width:'100%',padding:'8px',borderRadius:6,border:'1px solid #ccc',marginTop:4}}/>
+                        </div>
+                        {editAuctionError && <p style={{color:'red',marginBottom:10}}>{editAuctionError}</p>}
+                        <div style={{display:'flex',gap:12,marginTop:8}}>
+                          <button type="button" style={{background:'#7c3aed',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={()=>setEditAuctionModalOpen(false)}>Otkaži</button>
+                          <button type="submit" style={{background:'#22c55e',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} disabled={editAuctionLoading}>{editAuctionLoading ? 'Čuvam...' : 'Potvrdi'}</button>
+                        </div>
+                      </form>
                     </div>
                   </Modal>
             </ul>
@@ -218,7 +277,7 @@ const AdminAdd = () => {
                 <div style={{background:'#fff', borderRadius:10, padding:20, color:'#3B0270', minWidth:260}}>
                   <h3 style={{marginTop:0, marginBottom:16, color:'#7c3aed'}}>Da li želite da izbrisete {deleteModal.type === 'product' ? 'proizvod' : 'kategoriju'}?</h3>
                   <p style={{marginBottom:18}}><strong>{deleteModal.item.name}</strong></p>
-                  <div style={{display:'flex',gap:12}}>
+                  <div style={{display:'flex',gap:12,marginBottom:12}}>
                     <button style={{background:'#7c3aed',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={()=>setDeleteModal(null)}>Otkaži</button>
                     <button style={{background:'#b30000',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={async()=>{
                       try{
@@ -234,10 +293,95 @@ const AdminAdd = () => {
                         alert('Greška pri brisanju.');
                       }
                     }}>Izbriši</button>
+                    <button style={{background:'#fbbf24',color:'#3B0270',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={() => {
+                      if(deleteModal.type==='product'){
+                        setEditProductName(deleteModal.item.name);
+                        setEditProductError("");
+                        setEditProductModalOpen(true);
+                      }else{
+                        setEditCategoryName(deleteModal.item.name);
+                        setEditCategoryError("");
+                        setEditCategoryModalOpen(true);
+                      }
+                    }}>Izmeni</button>
                   </div>
                 </div>
               </Modal>
             )}
+            {/* Modal za izmenu proizvoda */}
+            <Modal open={editProductModalOpen} onClose={()=>setEditProductModalOpen(false)}>
+              <div style={{background:'#fff', borderRadius:10, padding:20, color:'#3B0270', minWidth:260}}>
+                <h3 style={{marginTop:0, marginBottom:16, color:'#7c3aed'}}>Izmeni proizvod</h3>
+                <form onSubmit={async e => {
+                  e.preventDefault();
+                  if(!editProductName.trim()){
+                    setEditProductError('Ime proizvoda je obavezno!');
+                    return;
+                  }
+                  setEditProductLoading(true);
+                  setEditProductError("");
+                  try {
+                    await api.put(`/products/${deleteModal?.item.id}`, {
+                      name: editProductName
+                    });
+                    setProducts(prev => prev.map((p:any) => p.id === deleteModal?.item.id ? { ...p, name: editProductName } : p));
+                    setEditProductModalOpen(false);
+                    setDeleteModal(null);
+                  } catch {
+                    setEditProductError('Greška pri izmeni proizvoda.');
+                  } finally {
+                    setEditProductLoading(false);
+                  }
+                }}>
+                  <div style={{marginBottom:14}}>
+                    <label style={{fontWeight:600}}>Ime proizvoda:</label><br/>
+                    <input type="text" value={editProductName} onChange={e=>setEditProductName(e.target.value)} style={{width:'100%',padding:'8px',borderRadius:6,border:'1px solid #ccc',marginTop:4}}/>
+                  </div>
+                  {editProductError && <p style={{color:'red',marginBottom:10}}>{editProductError}</p>}
+                  <div style={{display:'flex',gap:12,marginTop:8}}>
+                    <button type="button" style={{background:'#7c3aed',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={()=>setEditProductModalOpen(false)}>Otkaži</button>
+                    <button type="submit" style={{background:'#22c55e',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} disabled={editProductLoading}>{editProductLoading ? 'Čuvam...' : 'Potvrdi'}</button>
+                  </div>
+                </form>
+              </div>
+            </Modal>
+            {/* Modal za izmenu kategorije */}
+            <Modal open={editCategoryModalOpen} onClose={()=>setEditCategoryModalOpen(false)}>
+              <div style={{background:'#fff', borderRadius:10, padding:20, color:'#3B0270', minWidth:260}}>
+                <h3 style={{marginTop:0, marginBottom:16, color:'#7c3aed'}}>Izmeni kategoriju</h3>
+                <form onSubmit={async e => {
+                  e.preventDefault();
+                  if(!editCategoryName.trim()){
+                    setEditCategoryError('Ime kategorije je obavezno!');
+                    return;
+                  }
+                  setEditCategoryLoading(true);
+                  setEditCategoryError("");
+                  try {
+                    await api.put(`/categories/${deleteModal?.item.id}`, {
+                      name: editCategoryName
+                    });
+                    setCategories(prev => prev.map((c:any) => c.id === deleteModal?.item.id ? { ...c, name: editCategoryName } : c));
+                    setEditCategoryModalOpen(false);
+                    setDeleteModal(null);
+                  } catch {
+                    setEditCategoryError('Greška pri izmeni kategorije.');
+                  } finally {
+                    setEditCategoryLoading(false);
+                  }
+                }}>
+                  <div style={{marginBottom:14}}>
+                    <label style={{fontWeight:600}}>Ime kategorije:</label><br/>
+                    <input type="text" value={editCategoryName} onChange={e=>setEditCategoryName(e.target.value)} style={{width:'100%',padding:'8px',borderRadius:6,border:'1px solid #ccc',marginTop:4}}/>
+                  </div>
+                  {editCategoryError && <p style={{color:'red',marginBottom:10}}>{editCategoryError}</p>}
+                  <div style={{display:'flex',gap:12,marginTop:8}}>
+                    <button type="button" style={{background:'#7c3aed',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={()=>setEditCategoryModalOpen(false)}>Otkaži</button>
+                    <button type="submit" style={{background:'#22c55e',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} disabled={editCategoryLoading}>{editCategoryLoading ? 'Čuvam...' : 'Potvrdi'}</button>
+                  </div>
+                </form>
+              </div>
+            </Modal>
       </div>
       {/* Wrapper za dva bloka: bidovi i korisnici */}
       <div style={{display:'flex', gap: '32px', justifyContent:'center', marginTop: '50px', marginBottom: '40px', flexWrap:'wrap'}}>
