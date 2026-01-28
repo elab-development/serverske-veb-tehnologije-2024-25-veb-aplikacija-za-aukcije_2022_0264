@@ -24,30 +24,23 @@ const AdminAdd = () => {
 
   // State za podatke
   const [auctions, setAuctions] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [deleteModal, setDeleteModal] = useState<{type:'product'|'category',item:any}|null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [selectedAuction, setSelectedAuction] = useState<any|null>(null);
   const [bids, setBids] = useState<any[]>([]);
   const [allBids, setAllBids] = useState<any[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [bidsLoading, setBidsLoading] = useState(false);
   const [bidsError, setBidsError] = useState("");
-    // Funkcija za otvaranje modala i učitavanje bidova
-    const handleAuctionClick = (auction:any) => {
-      setSelectedAuction(auction);
-      setModalOpen(true);
-      setBidsLoading(true);
-      setBidsError("");
-      api.get(`/auctions/${auction.id}/bids`)
-        .then((res) => {
-          setBids(Array.isArray(res.data) ? res.data : res.data?.bids || res.data?.data || []);
-        })
-        .catch(() => setBidsError("Greška pri učitavanju bidova."))
-        .finally(() => setBidsLoading(false));
-    };
-  const [categories, setCategories] = useState<any[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
-  const [deleteModal, setDeleteModal] = useState<{type:'product'|'category',item:any}|null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [users, setUsers] = useState<any[]>([]);
+  const [userBids, setUserBids] = useState<any[]>([]);
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<any|null>(null);
+  const [userBidsLoading, setUserBidsLoading] = useState(false);
+  const [userBidsError, setUserBidsError] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -57,16 +50,46 @@ const AdminAdd = () => {
       api.get("/categories"),
       api.get("/products"),
       api.get("/bids"),
+      api.get("/users"), // Dodato za korisnike
     ])
-      .then(([a, c, p, b]) => {
+      .then(([a, c, p, b, u]) => {
         setAuctions(Array.isArray(a.data) ? a.data : a.data?.data || a.data?.auctions || []);
         setCategories(Array.isArray(c.data) ? c.data : c.data?.categories || c.data?.data || []);
         setProducts(Array.isArray(p.data) ? p.data : p.data?.data || []);
         setAllBids(Array.isArray(b.data) ? b.data : b.data?.bids || b.data?.data || []);
+        setUsers(Array.isArray(u.data) ? u.data : u.data?.users || u.data?.data || []);
       })
       .catch(() => setError("Greška pri učitavanju podataka."))
       .finally(() => setLoading(false));
   }, []);
+
+  // Funkcija za klik na korisnika
+  const handleUserClick = (user: any) => {
+    setSelectedUser(user);
+    setUserModalOpen(true);
+    setUserBidsLoading(true);
+    setUserBidsError("");
+    api.get(`/users/${user.id}/bids`)
+      .then((res) => {
+        setUserBids(Array.isArray(res.data) ? res.data : res.data?.bids || res.data?.data || []);
+      })
+      .catch(() => setUserBidsError("Greška pri učitavanju bidova."))
+      .finally(() => setUserBidsLoading(false));
+  };
+
+  // Funkcija za otvaranje modala i učitavanje bidova za aukciju
+  const handleAuctionClick = (auction: any) => {
+    setSelectedAuction(auction);
+    setModalOpen(true);
+    setBidsLoading(true);
+    setBidsError("");
+    api.get(`/auctions/${auction.id}/bids`)
+      .then((res) => {
+        setBids(Array.isArray(res.data) ? res.data : res.data?.bids || res.data?.data || []);
+      })
+      .catch(() => setBidsError("Greška pri učitavanju bidova."))
+      .finally(() => setBidsLoading(false));
+  };
 
   return (
     <>
@@ -216,20 +239,59 @@ const AdminAdd = () => {
               </Modal>
             )}
       </div>
-      {/* Blok za sve bidove */}
-      <div className="admin-bids-block">
-        <h2>Svi bidovi</h2>
-        {loading ? <p>Učitavanje...</p> : error ? <p style={{color:'red'}}>{error}</p> : (
-          <ul className="admin-bids-list">
-            {allBids.map((bid:any) => (
-              <li key={bid.id}>
-                <strong>Aukcija:</strong> {bid.auction?.title || bid.auction_id || 'Nepoznato'}<br/>
-                <strong>Korisnik:</strong> {bid.user?.name || bid.user_id || 'Nepoznato'}<br/>
-                <strong>Iznos:</strong> {bid.amount}
-              </li>
-            ))}
-          </ul>
-        )}
+      {/* Wrapper za dva bloka: bidovi i korisnici */}
+      <div style={{display:'flex', gap: '32px', justifyContent:'center', marginTop: '50px', marginBottom: '40px', flexWrap:'wrap'}}>
+        <div className="admin-bids-block" style={{minWidth:320, maxWidth:400, flex:1}}>
+          <h2>Svi bidovi</h2>
+          {loading ? <p>Učitavanje...</p> : error ? <p style={{color:'red'}}>{error}</p> : (
+            <ul className="admin-bids-list">
+              {allBids.map((bid:any) => (
+                <li key={bid.id}>
+                  <strong>Aukcija:</strong> {bid.auction?.title || bid.auction_id || 'Nepoznato'}<br/>
+                  <strong>Korisnik:</strong> {bid.user?.name || bid.user_id || 'Nepoznato'}<br/>
+                  <strong>Iznos:</strong> {bid.amount}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="admin-bids-block" style={{minWidth:320, maxWidth:400, flex:1}}>
+          <h2>Svi korisnici</h2>
+          {loading ? <p>Učitavanje...</p> : error ? <p style={{color:'red'}}>{error}</p> : (
+            <ul className="admin-bids-list">
+              {users.map((user:any) => (
+                <li key={user.id} className="admin-list-clickable" style={{cursor:'pointer'}} onClick={()=>handleUserClick(user)}>
+                  {user.name} ({user.email})
+                </li>
+              ))}
+            </ul>
+          )}
+          {/* Modal za bidove korisnika */}
+          <Modal open={userModalOpen} onClose={()=>setUserModalOpen(false)}>
+            <div style={{background:'#fff', borderRadius:10, padding:20, color:'#3B0270'}}>
+              <h3 style={{marginTop:0, marginBottom:16, color:'#7c3aed'}}>Bidovi za korisnika: {selectedUser?.name}</h3>
+              {userBidsLoading ? (
+                <p>Učitavanje...</p>
+              ) : userBidsError ? (
+                <p style={{color:'red'}}>{userBidsError}</p>
+              ) : userBids.length === 0 ? (
+                <p>Korisnik nema bidova.</p>
+              ) : (
+                <ul style={{listStyle:'none',padding:0}}>
+                  {userBids.map((bid:any) => (
+                    <li key={bid.id} style={{borderBottom:'1px solid #eee',padding:'8px 0'}}>
+                      <strong>Aukcija:</strong> {bid.auction?.title || bid.auction_id || 'Nepoznato'}<br/>
+                      <strong>Iznos:</strong> {bid.amount}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div style={{display:'flex',gap:12,marginTop:18}}>
+                <button style={{background:'#7c3aed',color:'#fff',border:'none',padding:'8px 18px',borderRadius:6,fontWeight:600,cursor:'pointer'}} onClick={()=>setUserModalOpen(false)}>Zatvori</button>
+              </div>
+            </div>
+          </Modal>
+        </div>
       </div>
     </>
   );

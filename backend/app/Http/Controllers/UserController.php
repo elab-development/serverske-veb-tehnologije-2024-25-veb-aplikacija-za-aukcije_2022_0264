@@ -72,4 +72,10 @@ class UserController extends Controller
             'message' => 'You have successfully logged out.'
         ];
     }
+
+    public function index()
+    {
+        $users = User::select('id', 'name', 'email', 'is_admin')->get();
+        return response()->json(['users' => $users]);
+    }
 }

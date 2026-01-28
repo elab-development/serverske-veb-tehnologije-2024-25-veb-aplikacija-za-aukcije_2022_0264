@@ -42,6 +42,7 @@ Route::get('/auctions/{auction}', [AuctionController::class, 'show']);
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+Route::get('/users', [UserController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('categories', CategoryController::class)
