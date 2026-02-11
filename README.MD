@@ -1,11 +1,58 @@
-Ova aplikacija je razvijena pomoću Laravel framework-a i predstavlja REST API sistem za aukcije. Njena osnovna svrha je da omogući korisnicima kreiranje i upravljanje aukcijama, davanje ponuda (bids), pregled kategorija i interakciju sa spoljnim aukcijskim API-jevima. Aplikacija je projektovana tako da bude isključivo backend servis, bez grafičkog korisničkog interfejsa, ali sa jasno definisanim endpointima koji se mogu koristiti iz bilo kog frontend klijenta (web, mobilna aplikacija ili treći servis).
 
-Centralni entiteti aplikacije su User, Auction, Bid i Category. Korisnici mogu biti regularni ili administratori, pri čemu su administratorske privilegije neophodne za određene operacije kao što su upravljanje kategorijama, brisanje ili uređivanje tuđih aukcija i izvoz podataka. Svaka aukcija sadrži osnovne podatke poput naslova, opisa, početne cene, trenutne najviše ponude i vremena trajanja. Aukcija pripada određenoj kategoriji i vezana je za korisnika koji ju je kreirao. Ponude (bids) predstavljaju ključni deo sistema – korisnici daju ponude na aukcijama, a sistem automatski ažurira najvišu ponudu i kontroliše pravila da nova ponuda mora biti veća od prethodne.
+# Veb aplikacija za online aukcije
 
-Poseban akcenat stavljen je na kontrolu pristupa i bezbednost. Regularni korisnici imaju uvid samo u sopstvene ponude, dok administratori imaju mogućnost uvida u sve ponude i aukcije, kao i dodatne rute za pregled ponuda po aukciji ili po konkretnom korisniku. Za sve zaštićene rute koristi se autentikacija preko Laravel Sanctum-a, čime se obezbeđuje da samo prijavljeni korisnici mogu pristupati sistemu.
+Ova aplikacija je full-stack veb aplikacija razvijena koriscenjem React-a sa TypeScript-om na frontend strani i Laravel-a na backend strani, koji funkcionise kao REST API sistem za aukcije. Osnovna svrha aplikacije je da omoguci korisnicima davanje ponuda (bids) na aukcijama, dok administratorima pruza mogucnost upravljanja aukcijama, kao i kreiranja, pregleda, izmene i brisanja kategorija, proizvoda i aukcija, kao i interakciju sa spoljnim aukcijskim API-jevima. Aplikacija je projektovana kao integrisan frontend i backend sistem, sa grafickim korisnickim interfejsom i jasno definisanim endpointima.
 
-Aplikacija takođe omogućava integraciju sa javnim aukcijskim API-jevima. Implementirane su rute koje pozivaju eksterne izvore – GSA Auctions API (američke vladine aukcije) i ProZorro/OpenProcurement API (sistem javnih nabavki). Ove rute su dostupne samo ulogovanim korisnicima i služe kao demonstracija kako se sistem može povezati sa spoljnim servisima.
+Centralni entiteti aplikacije su User, Auction, Product, Bid i Category. Korisnici sistema mogu biti neautentifikovani, regularni (autentifikovani) ili administratori. Administratorske privilegije su neophodne za izvrsavanje odredjenih operacija, kao sto su upravljanje kategorijama i proizvodima, kao i uredjivanje ili brisanje aukcija i izvoz podataka. Svaka aukcija sadrzi osnovne podatke o opisu, pocetnoj ceni, trenutnoj najvisoj ponudi i vremenu trajanja, kao i informacije o proizvodu koji se nalazi na aukciji. Aukcija pripada odredjenom proizvodu i povezana je sa administratorom koji ju je kreirao.
 
-Kao dodatnu funkcionalnost, sistem nudi izvoz podataka u CSV formatu. Administratori mogu generisati i preuzeti CSV fajl sa svim podacima o aukcijama, što omogućava laku integraciju sa eksternim alatima za analitiku ili čuvanje istorijskih podataka. Ovaj export je implementiran jednostavno i efikasno, tako da se može lako proširiti i na ponude ili druge entitete.
+Ponude (bids) predstavljaju kljucni deo sistema - korisnici daju ponude na aukcijama, dok sistem automatski azurira najvisu ponudu i obezbedjuje da svaka nova ponuda mora biti veca od prethodne.
 
-Sve u svemu, aplikacija predstavlja robustan i proširiv API sistem za aukcije sa jasnom podelom prava pristupa, fokusom na sigurnost i mogućnošću integracije sa spoljnim izvorima podataka. Zahvaljujući dobroj organizaciji koda i korišćenju resursa (Resource klasa u Laravelu), svi podaci se vraćaju u konzistentnom JSON formatu, što je čini pogodnom za korišćenje u realnim projektima ili kao osnovu za dalji razvoj složenijih sistema.
+Poseban akcenat stavljen je na kontrolu pristupa i bezbednost sistema. Regularni korisnici imaju uvid iskljucivo u sopstvene ponude, dok administratori imaju mogucnost uvida u sve ponude i aukcije, kao i pristup dodatnim rutama za pregled ponuda po aukciji ili po konkretnom korisniku. Za sve zasticene rute koristi se autentifikacija putem Laravel Sanctum-a, cime se obezbedjuje da samo prijavljeni korisnici mogu pristupati sistemu.
+
+Aplikacija omogucava integraciju sa javno dostupnim aukcijskim API-jevima. Implementirane su rute koje komuniciraju sa spoljnim servisima, kao sto su GSA Auctions API (americke vladine aukcije) i ProZorro / OpenProcurement API (sistem javnih nabavki). Ove rute su dostupne iskljucivo autentifikovanim korisnicima i sluze kao demonstracija povezivanja sistema sa spoljnim servisima.
+
+Kao dodatna funkcionalnost, sistem omogucava izvoz podataka u CSV formatu. Administratori mogu generisati i preuzeti CSV fajl sa podacima o aukcijama, sto omogucava laku integraciju sa eksternim alatima za analitiku ili cuvanje istorijskih podataka. Ova funkcionalnost je implementirana na nacin koji omogucava lako prosirenje i na druge entitete, poput ponuda.
+
+Svi podaci se vracaju u konzistentnom JSON formatu, sto aplikaciju cini pogodnom za dalji razvoj.
+
+
+## Instalacija
+
+## Preduslovi 
+- instaliran Docker Desktop
+- instaliran Docker Compose
+- instaliran Git
+- instaliran Node.js i npm (frontend)
+- instaliran Composer (backend)
+
+## Pokretanje aplikacije
+- Kloniranje repozitorijuma
+```bash
+git clone https://github.com/elab-development/serverske-veb-tehnologije-2024-25-veb-aplikacija-za-aukcije_2022_0264.git
+
+```
+- U backend-u kreirati .env fajl i prekopirati sadrzaj iz fajla .env.example
+- Pokrenuti Docker kontejnere
+```bash
+docker compose down -v
+docker compose up --build
+
+```
+- Nakon sto se kontejneri uspesno pokrenu,u drugom terminalu izvrsiti sledece komande
+```bash
+docker exec -it laravel_app php artisan key:generate
+```
+- Ovaj korak je obavezan,sluzi za brisanje postojecih tabela u bazi, ponovno izvrsavanje migracija i automatsko popunjavanje baze testnim podacima neophodnih za rad aplikacije
+```bash
+docker exec -it laravel_app php artisan migrate:fresh --seed
+```
+- Instalacija frontend (React) paketa lokalno u okviru VS Code-a.
+```bash
+npm --prefix frontend ci
+```
+- Instalacija Laravel (backend) zavisnosti lokalno, kako bi VS Code pravilno prepoznao backend pakete
+```bash
+composer install --no-interaction --prefer-source
+```
+
+

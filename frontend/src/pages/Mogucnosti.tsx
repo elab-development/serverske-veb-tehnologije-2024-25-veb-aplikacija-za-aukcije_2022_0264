@@ -1,97 +1,152 @@
 import "../styles/Mogucnosti.css";
 import AuthNavigation from "../components/AuthNavigation";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-interface ApiData {
-  title: string;
-  info: string;
-  link?: string;
-}
+
 
 export default function Mogucnosti() {
   const [gsa, setGsa] = useState<any[]>([]);
   const [prozorro, setProzorro] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
+
     Promise.all([
-      axios.get("/api/external/gsa-auctions").then(res => res.data),
-      axios.get("/api/external/prozorro-auctions").then(res => res.data)
-    ]).then(([gsaData, prozorroData]) => {
-      let gsaList = Array.isArray(gsaData.data) && gsaData.data.length > 0 ? gsaData.data : [
-        { id: 1, title: "GSA aukcija 1", price: 100 },
-        { id: 2, title: "GSA aukcija 2", price: 200 },
-        { id: 3, title: "GSA aukcija 3", price: 300 }
-      ];
-      let prozorroList = Array.isArray(prozorroData.data) && prozorroData.data.length > 0 ? prozorroData.data : [
-        { id: 1, title: "ProZorro aukcija A", price: 150 },
-        { id: 2, title: "ProZorro aukcija B", price: 250 },
-        { id: 3, title: "ProZorro aukcija C", price: 350 }
-      ];
-      setGsa(gsaList);
-      setProzorro(prozorroList);
-    }).catch(() => {
-      setGsa([
-        { id: 1, title: "GSA aukcija 1", price: 100 },
-        { id: 2, title: "GSA aukcija 2", price: 200 },
-        { id: 3, title: "GSA aukcija 3", price: 300 }
-      ]);
-      setProzorro([
-        { id: 1, title: "ProZorro aukcija A", price: 150 },
-        { id: 2, title: "ProZorro aukcija B", price: 250 },
-        { id: 3, title: "ProZorro aukcija C", price: 350 }
-      ]);
-    }).finally(() => setLoading(false));
+      api.get("/external/gsa-auctions").then((res) => res.data),
+      api.get("/external/prozorro-auctions").then((res) => res.data),
+    ])
+      .then(([gsaData, prozorroData]) => {
+        console.log("GSA RAW:", gsaData);
+        console.log("PROZORRO RAW:", prozorroData);
+
+        const gsaResults = Array.isArray(gsaData?.data?.Results) ? gsaData.data.Results : [];
+
+        const prozorroList = Array.isArray(prozorroData?.data) ? prozorroData.data : [];
+
+        setGsa(gsaResults);
+        setProzorro(prozorroList);
+      })
+      .catch((e) => {
+        setError(e?.message ?? "Greška pri učitavanju eksternih podataka.");
+        setGsa([]);
+        setProzorro([]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
+
   return (
-    
+
     <div className="mogucnosti-page">
       <AuthNavigation mode="dark" />
       <div className="mogucnosti-container">
-        <div className="mogucnosti-left">
-          <h2>Mogućnosti platforme</h2>
-          <ul>
+
+        <div className="mogucnosti-hero">
+          <h1>Mogućnosti platforme</h1>
+          <ul className="mogucnosti-features">
             <li>Brza registracija i početak korišćenja</li>
             <li>Sigurne aukcije i podrška 24/7</li>
             <li>Jednostavno praćenje ponuda i proizvoda</li>
           </ul>
         </div>
-        <div className="mogucnosti-right">
-          <h2>Ovde možete videti podatke iz eksternih aukcijskih servisa:</h2>
-          {loading ? <p>Učitavanje...</p> : (
-            <>
-              <div className="api-block">
-                <strong>GSA Aukcije</strong>
-                <ul>
-                  {gsa.map((item: any) => (
-                    <li key={item.id}>{JSON.stringify(item)}</li>
-                  ))}
-                </ul>
+
+        {/* ERROR + LOADING */}
+        {error && <p className="mogucnosti-error">{error}</p>}
+        {loading && <p className="mogucnosti-loading">Učitavanje...</p>}
+
+        {/* 2 BLOKA: GSA / PROZORRO */}
+        {!loading && (
+          <div className="mogucnosti-two-cols">
+            <div className="api-panel">
+              <div className="api-panel__header">
+                <h2>GSA Aukcije</h2>
+                <span className="api-panel__sub">Prikaz prvih 5 rezultata</span>
               </div>
-              <div className="api-block">
-                <strong>ProZorro Aukcije</strong>
-                <ul>
-                  {prozorro.map((item: any) => (
-                    <li key={item.id}>{JSON.stringify(item)}</li>
-                  ))}
-                </ul>
+
+              <div className="prozorro-grid">
+                {gsa.length === 0 ? (
+                  <p style={{ opacity: 0.8 }}>Nema dostupnih GSA aukcija.</p>
+                ) : (
+                  gsa.slice(0, 5).map((item: any, index: number) => (
+                    <div
+                      className="prozorro-card"
+                      key={`${item.saleNo ?? "sale"}-${item.lotNo ?? index}`}
+                    >
+
+
+                      <div className="prozorro-title"> Item :  {item.itemName ?? "Untitled"}</div>
+
+                      <div className="prozorro-date">
+                        Status: <b>{item.auctionStatus ?? "—"}</b>
+                      </div>
+
+                      <div className="prozorro-date">
+                        Lokacija: {item.saleLocation ?? "—"}
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
-            </>
-          )}
-          <h3 style={{marginTop:32}}>Klikom na dugme, preuzimate listu aukcija</h3>
-          
-          <Button 
-            variant="secondary"  
-            onClick={() => window.location.href = "http://127.0.0.1:8000/api/auctions/export"}>
+            </div>
+
+            <div className="api-panel">
+              <div className="api-panel__header">
+                <h2>ProZorro Aukcije</h2>
+                <span className="api-panel__sub">Prikaz prvih 5 rezultata</span>
+              </div>
+
+              <div className="prozorro-grid">
+                {prozorro.length === 0 ? (
+                  <p style={{ opacity: 0.8 }}>Nema dostupnih ProZorro tendera.</p>
+                ) : (
+                  prozorro.slice(0, 5).map((item: any) => (
+                    <div className="prozorro-card" key={item.id}>
+                     
+
+                      <div className="prozorro-id">
+                       Tedner  {item.id.slice(0, 10)}…{item.id.slice(-6)}
+                      </div>
+
+                      <div className="prozorro-date">
+                        {new Date(item.dateModified).toLocaleString()}
+                      </div>
+
+                      <a
+                        href={`https://public-api-sandbox.prozorro.gov.ua/api/2.5/tenders/${item.id}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="prozorro-link"
+                      >
+                        Pogledaj tender
+                      </a>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* CSV DUGME NA DNU */}
+        <div className="mogucnosti-actions">
+          <h3>Preuzmi listu aukcija</h3>
+          <Button
+            variant="secondary"
+            onClick={() =>
+              (window.location.href = "http://127.0.0.1:8000/api/auctions/export")
+            }
+          >
             CSV
           </Button>
         </div>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
