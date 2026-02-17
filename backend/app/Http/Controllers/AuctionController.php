@@ -8,11 +8,17 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use OpenApi\Annotations as OA;
 
 class AuctionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     * path="/api/auctions",
+     * summary="Get all auctions",
+     * tags={"Auctions"},
+     * @OA\Response(response=200, description="List of auctions")
+     * )
      */
     public function index(Request $request)
     {
@@ -153,8 +159,23 @@ class AuctionController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
+  /**
+     * @OA\Post(
+     * path="/api/auctions",
+     * summary="Create auction (Admin only)",
+     * tags={"Auctions"},
+     * security={{"sanctum":{}}},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(
+     * required={"product_id","starting_price","end_date"},
+     * @OA\Property(property="product_id", type="integer"),
+     * @OA\Property(property="starting_price", type="number"),
+     * @OA\Property(property="end_date", type="string", format="date-time")
+     * )
+     * ),
+     * @OA\Response(response=201, description="Auction created")
+     * )
      */
     public function store(Request $request)
     {
@@ -189,8 +210,14 @@ class AuctionController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
+   /**
+     * @OA\Get(
+     * path="/api/auctions/{id}",
+     * summary="Get auction by ID with bids",
+     * tags={"Auctions"},
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     * @OA\Response(response=200, description="Auction details with bids")
+     * )
      */
     public function show(Auction $auction)
     {
@@ -208,9 +235,18 @@ class AuctionController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
+/**
+     * @OA\Put(
+     * path="/api/auctions/{id}",
+     * summary="Update auction (Admin/Owner)",
+     * tags={"Auctions"},
+     * security={{"sanctum":{}}},
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     * @OA\RequestBody(
+     * @OA\JsonContent(@OA\Property(property="title", type="string"))
+     * ),
+     * @OA\Response(response=200, description="Updated")
+     * )
      */
     public function update(Request $request, Auction $auction)
     {
@@ -241,7 +277,14 @@ class AuctionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     * path="/api/auctions/{id}",
+     * summary="Delete auction (Admin only)",
+     * tags={"Auctions"},
+     * security={{"sanctum":{}}},
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     * @OA\Response(response=200, description="Deleted")
+     * )
      */
     public function destroy(Auction $auction)
     {

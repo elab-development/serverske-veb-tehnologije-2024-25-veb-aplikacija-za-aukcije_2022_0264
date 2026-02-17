@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use OpenApi\Annotations as OA;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of products. Public endpoint.
-     * Supports: q (search), category_id, min_price, max_price, sort, per_page
+     * @OA\Get(
+     * path="/api/products",
+     * summary="Get all products",
+     * tags={"Products"},
+     * @OA\Response(response=200, description="List of products")
+     * )
      */
     public function index(Request $request)
     {
@@ -58,21 +62,47 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    /**
-     * Display the specified product. Public endpoint.
+/**
+     * @OA\Get(
+     * path="/api/products/{id}",
+     * summary="Get single product by ID",
+     * tags={"Products"},
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     * @OA\Response(response=200, description="Product details")
+     * )
      */
     public function show(Product $product)
     {
+      
+
         $product->load('category', 'auctions');
 
         return response()->json(['product' => $product]);
     }
 
-    /**
-     * Store a newly created product. Admin only (route protected by middleware).
+   /**
+     * @OA\Post(
+     * path="/api/products",
+     * summary="Create product (Admin only)",
+     * tags={"Products"},
+     * security={{"sanctum":{}}},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(
+     * required={"name","price","category_id"},
+     * @OA\Property(property="name", type="string"),
+     * @OA\Property(property="price", type="number"),
+     * @OA\Property(property="category_id", type="integer")
+     * )
+     * ),
+     * @OA\Response(response=201, description="Product created")
+     * )
      */
     public function store(Request $request)
     {
+       
+
+
         if (!Auth::check() || !(Auth::user()->is_admin ?? false)) {
             return response()->json(['message' => 'Unauthorized. Only admins can create products.'], 403);
         }
@@ -114,9 +144,15 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
-
-    /**
-     * Remove the specified product. Admin only.
+/**
+     * @OA\Delete(
+     * path="/api/products/{id}",
+     * summary="Delete product (Admin only)",
+     * tags={"Products"},
+     * security={{"sanctum":{}}},
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     * @OA\Response(response=200, description="Deleted")
+     * )
      */
     public function destroy(Product $product)
     {

@@ -8,8 +8,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
+use OpenApi\Annotations as OA;
 class UserController extends Controller
 {
+   /**
+     * @OA\Post(
+     * path="/api/register",
+     * summary="Register new user",
+     * tags={"Auth"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(
+     * required={"name","email","password"},
+     * @OA\Property(property="name", type="string", example="Nevena"),
+     * @OA\Property(property="email", type="string", example="nevena@gmail.com"),
+     * @OA\Property(property="password", type="string", example="password123")
+     * )
+     * ),
+     * @OA\Response(response=201, description="User registered successfully")
+     * )
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -40,6 +59,24 @@ class UserController extends Controller
             'token_type' => 'Bearer'
         ]);
     }
+/**
+     * @OA\Post(
+     * path="/api/login",
+     * summary="Login user",
+     * tags={"Auth"},
+     * @OA\RequestBody(
+     * required=true,
+     * @OA\JsonContent(
+     * required={"email","password"},
+     * @OA\Property(property="email", type="string", example="nevena@gmail.com"),
+     * @OA\Property(property="password", type="string", example="password123")
+     * )
+     * ),
+     * @OA\Response(response=200, description="Login successful"),
+     * @OA\Response(response=401, description="Invalid credentials")
+     * )
+     */
+
 
     public function login(Request $request)
     {
@@ -63,7 +100,15 @@ class UserController extends Controller
             'token_type' => 'Bearer'
         ]);
     }
-
+/**
+     * @OA\Post(
+     * path="/api/logout",
+     * summary="Logout user",
+     * tags={"Auth"},
+     * security={{"sanctum":{}}},
+     * @OA\Response(response=200, description="Logged out successfully")
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()?->delete();
@@ -72,6 +117,16 @@ class UserController extends Controller
             'message' => 'You have successfully logged out.'
         ];
     }
+/**
+     * @OA\Get(
+     * path="/api/users",
+     * summary="Get all users (Admin only)",
+     * tags={"Users"},
+     * security={{"sanctum":{}}},
+     * @OA\Response(response=200, description="List of users"),
+     * @OA\Response(response=403, description="Unauthorized")
+     * )
+     */
 
     public function index()
     {
