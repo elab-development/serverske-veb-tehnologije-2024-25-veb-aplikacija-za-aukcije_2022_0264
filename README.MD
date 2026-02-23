@@ -16,29 +16,35 @@ Kao dodatna funkcionalnost, sistem omogucava izvoz podataka u CSV formatu. Admin
 Svi podaci se vracaju u konzistentnom JSON formatu, sto aplikaciju cini pogodnom za dalji razvoj.
 
 
-## Instalacija
+## Instalacija 
 
 ## Preduslovi 
-- instaliran Docker Desktop
-- instaliran Docker Compose
-- instaliran Git
-- instaliran Node.js i npm (frontend)
-- instaliran Composer (backend)
+- instaliran **Docker Desktop**
+- instaliran **Docker Compose**
+- instaliran **Git**
+- instaliran **Node.js i npm (frontend)**
+- instaliran **Composer (backend)**
 
 ## Pokretanje aplikacije
 - Kloniranje repozitorijuma
 ```bash
 git clone https://github.com/elab-development/serverske-veb-tehnologije-2024-25-veb-aplikacija-za-aukcije_2022_0264.git
-
+```
+- Ulazak u folder projekta 
+```bash
+cd serverske-veb-tehnologije-2024-25-veb-aplikacija-za-aukcije_2022_0264
 ```
 - U backend-u kreirati .env fajl i prekopirati sadrzaj iz fajla .env.example
-- Pokrenuti Docker kontejnere
+- **NAPOMENA** - *U env. fajlu podesiti **GSA_API_KEY** za eskterne aukcije*
+
+## Pokretanje Docker-a
+- Pokretanje kontejnera 
 ```bash
 docker compose down -v
 docker compose up --build
 
 ```
-- Nakon sto se kontejneri uspesno pokrenu,u drugom terminalu izvrsiti sledece komande
+- Nakon sto se kontejneri uspesno pokrenu,u drugom terminalu izvrsiti sledece komande, generisati kljuc aplikacija
 ```bash
 docker exec -it laravel_app php artisan key:generate
 ```
@@ -54,5 +60,11 @@ npm --prefix frontend ci
 ```bash
 composer install --no-interaction --prefer-source
 ```
+## Generisanje Swagger dokumentacije
+```bash
+docker exec -it laravel_app php artisan l5-swagger:generate
+```
+
+
 
 
