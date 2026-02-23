@@ -64,6 +64,10 @@ composer install --no-interaction --prefer-source
 ```bash
 docker exec -it laravel_app php artisan l5-swagger:generate
 ```
+## Pokretanje automatizovanih testova
+```bash
+docker exec -it laravel_app php artisan test
+```
 
 
 

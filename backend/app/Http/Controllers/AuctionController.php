@@ -47,8 +47,8 @@ class AuctionController extends Controller
             $query->where(function ($w) use ($q) {
                 $w->where('title', 'like', "%{$q}%")
                     ->orWhere('description', 'like', "%{$q}%")
-                    ->orWhereHas('product',function ($p) use ($q){
-                        $p->where('name','like',"%{$q}%");
+                    ->orWhereHas('product', function ($p) use ($q) {
+                        $p->where('name', 'like', "%{$q}%");
                     });
             });
         }
@@ -159,7 +159,7 @@ class AuctionController extends Controller
         //
     }
 
-  /**
+    /**
      * @OA\Post(
      * path="/api/auctions",
      * summary="Create auction (Admin only)",
@@ -210,7 +210,7 @@ class AuctionController extends Controller
         ], 201);
     }
 
-   /**
+    /**
      * @OA\Get(
      * path="/api/auctions/{id}",
      * summary="Get auction by ID with bids",
@@ -221,7 +221,7 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
-        $auction->load('product'); 
+        $auction->load('product');
 
         return response()->json([
             'auction' => new AuctionResource($auction)
@@ -235,7 +235,7 @@ class AuctionController extends Controller
     {
         //
     }
-/**
+    /**
      * @OA\Put(
      * path="/api/auctions/{id}",
      * summary="Update auction (Admin/Owner)",
@@ -296,4 +296,5 @@ class AuctionController extends Controller
 
         return response()->json(['message' => 'Auction deleted successfully']);
     }
+   
 }

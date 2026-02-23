@@ -29,9 +29,17 @@ class Auction extends Model
     {
         return $this->belongsTo(Product::class);
     }
-   
+
     public function bids()
     {
         return $this->hasMany(Bid::class);
+    }
+    public function isActive(): bool
+    {
+        if (!$this->start_time || !$this->end_time) {
+            return false;
+        }
+
+        return now()->between($this->start_time, $this->end_time);
     }
 }
