@@ -1,0 +1,23 @@
+.nav-link--light {
+    color: #111;
+}
+
+.nav-link--dark {
+    color: #fff;
+}
+
+
+.nav-link--dark:hover {
+    opacity: 0.75;
+}
+
+.nav-link--active {
+    font-weight: 500;
+}
+
+.white:hover {
+    color: white;
+    opacity: 0.7;
+    color: 0.3s ease-out;
+    transition: color 0.3s ease-out, transform 0.3s ease-out;
+}
